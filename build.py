@@ -1,4 +1,4 @@
-"""Build the JEI extension with the game's native mod script encoding."""
+"""Build Just Enough Items for Tinkerlands with native mod script encoding."""
 import argparse
 import json
 from pathlib import Path
@@ -21,7 +21,7 @@ def build(destination=None, suite=None):
     destination.parent.mkdir(parents=True, exist_ok=True)
     expected = {}
     with zipfile.ZipFile(destination, 'w', zipfile.ZIP_DEFLATED) as archive:
-        archive.comment = f'Just Enough Items {VERSION}; based on supplied 0.0.1'.encode()
+        archive.comment = f'Just Enough Items for Tinkerlands {VERSION}'.encode()
         for key, ident, filename in SCRIPTS:
             source = (ROOT / 'src' / filename).read_text(encoding='utf-8').replace('@VERSION@', VERSION)
             if filename == 'jei.gml':

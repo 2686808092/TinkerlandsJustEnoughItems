@@ -1,4 +1,4 @@
-// Just Enough Items @VERSION@. Extended from the supplied 0.0.1 scripts.
+// Just Enough Items for Tinkerlands @VERSION@.
 
 function JEI_Locale() {
     var _langs = variable_global_get("__ALL_LANGS__");
