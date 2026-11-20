@@ -1,5 +1,7 @@
 # Just Enough Items for Tinkerlands
 
+[English](docs/readme/README.en.md) · **简体中文** · [繁體中文](docs/readme/README.zh-Hant.md) · [한국어](docs/readme/README.ko.md) · [Deutsch](docs/readme/README.de.md) · [Español](docs/readme/README.es.md) · [Français](docs/readme/README.fr.md) · [日本語](docs/readme/README.ja.md) · [Português (Brasil)](docs/readme/README.pt-BR.md) · [Русский](docs/readme/README.ru.md)
+
 Just Enough Items for Tinkerlands 是一款游戏内物品与配方查询模组。打开人物物品栏，即可在左侧搜索物品、查看制作方法和用途，或查询物品从哪里获得。
 
 ## 安装
