@@ -1,5 +1,7 @@
 # JEI 扩展接口 v1
 
+[English](extension-api.en.md)
+
 通过 `JEI_API()` 或全局 `__JEI_API` 获取接口。字段 `version` 当前为 `1`。在 JEI 脚本加载完成后使用；可在 `OnModLoad` 或后续更新事件接入。
 
 ## 配方提供器

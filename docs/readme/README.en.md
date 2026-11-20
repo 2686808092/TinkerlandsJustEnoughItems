@@ -38,4 +38,4 @@ Single-player auto-pause is on by default and can be disabled in settings. Multi
 
 `Ctrl-click` the tool icon to toggle cheat mode. Click a listed item for one item or Shift-click for a stack. With developer mode enabled too, you can obtain hidden items that the game can generate.
 
-[Changelog](../../CHANGELOG.md) · [Extension API](../extension-api.md)
+[Changelog](../../CHANGELOG.en.md) · [Extension API](../extension-api.en.md)
