@@ -1,5 +1,7 @@
 function JEI_Rect(_x, _y, _w, _h) { return [_x, _y, _x + _w, _y + _h]; }
 function JEI_SurfaceColor() { return make_color_rgb(25, 22, 30); }
+function JEI_PanelInk() { return make_color_rgb(47, 29, 24); }
+function JEI_PanelPaper() { return make_color_rgb(227, 197, 164); }
 
 function JEI_Layout(_s, _gw, _gh) {
     var _z = min(_gw / 1920, _gh / 1080);
@@ -384,8 +386,8 @@ function JEI_DrawSlot(_s, _entry, _z, _ink, _cube = false, _label = true) {
         JEI_PanelLabel(_r[2] - 4 * _z, _r[3] - 8 * _z, _count, 1.3 * _z, 6, c_white);
     }
     if (_label) {
-        var _scale = 1.56 * _z * _s.settings.font;
-        var _suffix = _count == "" ? "" : (JEI_Locale() == 1 ? " ×" : " x") + _count;
+        var _scale = 1.62 * _z * _s.settings.font;
+        var _suffix = _count == "" ? "" : " x" + _count;
         JEI_PanelText(_cx, _r[3] + 12 * _z, JEI_Name(_entry.id) + _suffix, _scale, 120 * _z, 3, 5, _ink);
     }
 }
@@ -411,7 +413,7 @@ function JEI_DrawPopupFrame(_s, _l, _title, _item = -1) {
         var _sy = [0, 9, _sourceH - 9, _sourceH];
         var _dx = [_left, _left + _border, _right - _border, _right];
         var _dy = [_top, _top + _border, _bottom - _border, _bottom];
-        JEI_Fill([_dx[1] - 1, _dy[1] - 1, _dx[2], _dy[2]], make_color_rgb(215, 179, 142));
+        JEI_Fill([_dx[1] - 1, _dy[1] - 1, _dx[2], _dy[2]], JEI_PanelPaper());
         for (var _column = 0; _column < 3; _column++) for (var _row = 0; _row < 3; _row++) {
             if (_column == 1 && _row == 1) continue;
             var _srcX = _sx[_column]; var _srcY = _sy[_row];
@@ -423,9 +425,9 @@ function JEI_DrawPopupFrame(_s, _l, _title, _item = -1) {
         }
     } else {
         JEI_Fill([_left, _top, _right - 1, _bottom - 1], make_color_rgb(125, 64, 57));
-        JEI_Fill([_left + _border, _top + _border, _right - _border, _bottom - _border], make_color_rgb(215, 179, 142));
+        JEI_Fill([_left + _border, _top + _border, _right - _border, _bottom - _border], JEI_PanelPaper());
     }
-    var _ink = make_color_rgb(68, 39, 39);
+    var _ink = JEI_PanelInk();
     var _titleX = _left + 26 * _z;
     if (_item >= 0) {
         JEI_Icon(_item, _left + 44 * _z, _top + 46 * _z, 38 * _z);
@@ -464,10 +466,11 @@ function JEI_DrawRecipe(_s, _l, _ink, _muted) {
         var _station = JEI_StationItem(_r);
         var _label = JEI_StationName(_r);
         if (_uses) _label = JEI_Text("uses") + " · " + _label;
-        if (_station >= 0) JEI_Icon(_station, _x + 39 * _z, _y + 103 * _z, 26 * _z);
-        var _size = 1.64 * _z * _s.settings.font;
-        var _fit = JEI_FitWidth(_label, _size, 427 * _z);
-        JEI_PanelLabel(_x + 60 * _z, _y + 103 * _z, _fit, _size, 4, _ink);
+        if (_station >= 0) JEI_Icon(_station, _x + 44 * _z, _y + 103 * _z, 34 * _z);
+        var _size = 1.93 * _z * _s.settings.font;
+        var _stationX = _station >= 0 ? 68 : 27;
+        var _fit = JEI_FitWidth(_label, _size, (490 - _stationX) * _z);
+        JEI_PanelLabel(_x + _stationX * _z, _y + 103 * _z, _fit, _size, 4, _ink);
     } else {
         var _count = _uses ? 0 : array_length(JEI_Acquisitions(_s, _s.selected));
         if (_count > 0) {
@@ -528,7 +531,7 @@ function JEI_DrawRecipe(_s, _l, _ink, _muted) {
 }
 
 function JEI_ConfigRow(_s, _r, _z, _name, _value, _note = "") {
-    var _ink = make_color_rgb(68, 39, 39);
+    var _ink = JEI_PanelInk();
     var _mid = (_r[1] + _r[3]) / 2;
     JEI_Fill(JEI_Rect(_r[0], _r[3] - _z, _r[2] - _r[0], max(1, _z)), make_color_rgb(174, 130, 104));
     var _button = JEI_Rect(_r[2] - 77 * _z, _mid - 15 * _z, 75 * _z, 30 * _z);
@@ -618,7 +621,7 @@ function JEI_Draw(_s, _gw = -1, _gh = -1) {
     var _l = JEI_Layout(_s, _gw, _gh);
     var _cream = make_color_rgb(255, 235, 205); var _muted = make_color_rgb(214, 184, 157);
     JEI_DrawCatalog(_s, _l, _cream, _muted);
-    var _ink = make_color_rgb(68, 39, 39);
+    var _ink = JEI_PanelInk();
     var _brown = make_color_rgb(110, 70, 53);
     if (_s.configOpen) JEI_DrawConfig(_s, _l, _ink, _brown);
     else if (_s.detailOpen) JEI_DrawRecipe(_s, _l, _ink, _brown);
