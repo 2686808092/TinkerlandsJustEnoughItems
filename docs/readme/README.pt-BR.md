@@ -6,7 +6,7 @@ Consulte itens, receitas, usos e formas de obtenção no inventário de Tinkerla
 
 ## Instalação
 
-Baixe `Just_Enough_Items_1.6.0.zip` em [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Coloque o ZIP sem extrair na pasta `mods` do jogo e reinicie. Ao atualizar, remova o ZIP anterior do JEI.
+Baixe `Just_Enough_Items_1.7.0.zip` em [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Coloque o ZIP sem extrair na pasta `mods` do jogo e reinicie. Ao atualizar, remova o ZIP anterior do JEI.
 
 A interface do mod está disponível em chinês simplificado e inglês. Os nomes dos itens e das estações seguem o idioma do jogo.
 
@@ -34,7 +34,7 @@ Busque pelo nome do item ou use pinyin para nomes em chinês. Use `#Accessories`
 
 ## Configurações, trapaças e modo desenvolvedor
 
-A pausa automática vem ativada no modo solo e pode ser desativada nas configurações. No multijogador a partida continua. Você também pode ajustar a opacidade do fundo, o tamanho do texto e os atalhos.
+A pausa automática vem ativada no modo solo e pode ser desativada nas configurações. No multijogador a partida continua.
 
 Use `Ctrl + clique esquerdo` no ícone de ferramenta para alternar o modo de trapaça. Clique em um item para obter uma unidade, ou segure Shift para obter uma pilha. Com o modo desenvolvedor também ativo, você pode obter itens ocultos que o jogo consegue gerar.
 

@@ -56,7 +56,7 @@ function JEI_BeginCatalog(_s) {
     var _w = JEI_NewCatalogWork();
     var _cache = JEI_CacheEligible();
     _s.catalogJob = {work:_w, stage:_cache ? -3 : 0, at:1, part:0, provider:0,
-        items:variable_global_get("__DB_ITEM"), recipes:variable_global_get("__DB_RECIPE"),
+        items:variable_global_get("__DB_ITEM"), itemIds:{}, recipes:variable_global_get("__DB_RECIPE"),
         cooks:variable_global_exists("__DB_COOK") ? variable_global_get("__DB_COOK") : [],
         cache:_cache,signature:"",reader:undefined,writer:undefined,coreReady:false,corePublished:false,
         fullFirst:JEI_API().itemPolicy != JEI_DefaultItemPolicy || JEI_API().searchMetadata != JEI_DefaultSearchMetadata,acquired:[],acquiredAt:0,
@@ -102,8 +102,7 @@ function JEI_CatalogStep(_j) {
         }
     } else if (_j.stage == 1) {
         if (_i >= _w.itemCount) { JEI_CatalogNext(_j); return; }
-        var _row = _j.items[_i];
-        if (is_array(_row) && array_length(_row) > 7 && _row[0] != 1024 && !is_undefined(_row[5]) && sprite_exists(_row[5])) array_push(_w.items, _i);
+        JEI_AddCatalogItem(_w, _i, _j.items[_i], _j.itemIds);
     } else if (_j.stage == 2) {
         if (_i >= _w.recipeCount) { JEI_CatalogNext(_j); return; }
         JEI_BuildRecipeRow(_w, _j.recipes[_i], _i);

@@ -1,6 +1,22 @@
 // Catalog visibility is separate from cheat permission and uses stable item keys.
 // The shipped game strips the optional implementation column from every item.
 // Use explicit WIP/placeholder markers, resource integrity, and runtime sources.
+function JEI_AddCatalogItem(_state, _index, _row, _seen) {
+    if (!is_array(_row) || array_length(_row) <= 7 || _row[0] == 1024 ||
+        is_undefined(_row[5]) || !sprite_exists(_row[5])) return;
+    var _native = _row[0];
+    var _numeric = JEI_Number(_native);
+    if (_numeric && _native != _index) {
+        var _canonical = JEI_ItemRow(_native);
+        if (is_array(_canonical) && _canonical[0] == _native &&
+            !is_undefined(_canonical[5]) && sprite_exists(_canonical[5])) return;
+    }
+    var _identity = (_numeric ? "native:" : "mod:") + string(_native);
+    if (variable_struct_exists(_seen, _identity)) return;
+    variable_struct_set(_seen, _identity, true);
+    array_push(_state.items, _index);
+}
+
 function JEI_SourceAdd(_s, _value) {
     var _id = JEI_NativeItemIndex(_value);
     if (_id >= 0) variable_struct_set(_s.sources, string(_id), true);
@@ -72,6 +88,8 @@ function JEI_DefaultItemPolicy(_s, _id, _row) {
     if (string_pos("spare", _key) > 0 || string_pos("placeholder", _key) > 0 ||
         string_pos("unused", _key) > 0 || string_pos("unimplemented", _key) > 0 ||
         string_pos("test_", _key) == 1 || string_pos("debug_", _key) == 1 || string_pos("dev_", _key) == 1 || string_pos("nea_", _key) == 1) return "development_marker";
+    if (JEI_Number(_row[0]) && (_name == "wip" || _name == "contract: wip" ||
+        string_pos("wip ", _name) == 1 || string_copy(_name, max(1, string_length(_name) - 4), 5) == "(wip)")) return "native_wip_label";
     // These keys carry explicit WIP names in the shipped English language file;
     // stable keys keep the decision identical after translations are applied.
     var _wip = ["wall_flesh", "wall_miasma_01", "wall_miasma_02", "miasma_wood", "chest_miasma", "miasma_door_01", "miasma_door_02",

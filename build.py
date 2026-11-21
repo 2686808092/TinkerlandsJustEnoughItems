@@ -6,7 +6,7 @@ import re
 import zipfile
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '1.6.0'
+VERSION = '1.7.0'
 PACKAGE_NAME = f'Just_Enough_Items_{VERSION}.zip'
 LANGUAGES = ('english', 'spanish', 'french', 'german', 'portuguese', 'japanese',
              'korean', 'chinese_traditional', 'chinese_simplified', 'russian')

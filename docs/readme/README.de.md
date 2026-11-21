@@ -6,7 +6,7 @@ Im Inventar von Tinkerlands lassen sich Gegenstände, Rezepte, Verwendungen und 
 
 ## Installation
 
-Lade `Just_Enough_Items_1.6.0.zip` unter [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) herunter. Lege die ZIP-Datei unverändert in den Ordner `mods` des Spiels und starte es neu. Entferne beim Update die alte JEI-ZIP.
+Lade `Just_Enough_Items_1.7.0.zip` unter [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) herunter. Lege die ZIP-Datei unverändert in den Ordner `mods` des Spiels und starte es neu. Entferne beim Update die alte JEI-ZIP.
 
 Die Mod-Oberfläche ist auf vereinfachtem Chinesisch und Englisch verfügbar. Die Namen der Gegenstände und Werkstationen folgen der aktuellen Spielsprache.
 
@@ -34,7 +34,7 @@ Suche nach Gegenstandsnamen oder nutze Pinyin für chinesische Namen. `#Accessor
 
 ## Einstellungen, Cheats und Entwicklermodus
 
-Die automatische Pause im Einzelspielermodus ist standardmäßig aktiv und lässt sich abschalten. Im Mehrspielermodus läuft das Spiel weiter. Hintergrunddeckkraft, Schriftgröße und Tastenbelegung sind einstellbar.
+Die automatische Pause im Einzelspielermodus ist standardmäßig aktiv und lässt sich abschalten. Im Mehrspielermodus läuft das Spiel weiter.
 
 Mit `Strg + Linksklick` auf das Werkzeugsymbol schaltest du den Cheatmodus um. Ein Klick auf einen Gegenstand gibt ein Exemplar, mit Umschalttaste einen Stapel. Mit aktiviertem Entwicklermodus lassen sich auch vom Spiel erzeugbare versteckte Gegenstände erhalten.
 

@@ -16,7 +16,7 @@ function JEI_CacheHashStart(_j) {
         array_push(_globals, "__DB_" + _tables[_i]); array_push(_globals, "__STR_E_" + _tables[_i] + "_DATA");
     }
     array_push(_globals, "__LANG", "__DB_SCRIPT", "__CUBE_RECIPES");
-    _j.hashJob = {globals:_globals, table:0, at:0, keys:[], hashes:[], hash:md5_string_utf8("JEI @VERSION@ cache 1:" + string(_j.work.language)), data:undefined};
+    _j.hashJob = {globals:_globals, table:0, at:0, keys:[], hashes:[], hash:md5_string_utf8("JEI @VERSION@ cache 2:" + string(_j.work.language)), data:undefined};
 }
 function JEI_CacheHashStep(_j) {
     var _h = _j.hashJob;

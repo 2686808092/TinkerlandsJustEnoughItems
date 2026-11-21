@@ -6,7 +6,7 @@ Consultez les objets, leurs recettes, leurs usages et leurs sources depuis l’i
 
 ## Installation
 
-Téléchargez `Just_Enough_Items_1.6.0.zip` depuis [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Placez le ZIP tel quel dans le dossier `mods` du jeu et relancez le jeu. Retirez l’ancienne archive JEI lors d’une mise à jour.
+Téléchargez `Just_Enough_Items_1.7.0.zip` depuis [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Placez le ZIP tel quel dans le dossier `mods` du jeu et relancez le jeu. Retirez l’ancienne archive JEI lors d’une mise à jour.
 
 L’interface du mod est disponible en chinois simplifié et en anglais. Les noms des objets et des postes de fabrication suivent la langue du jeu.
 
@@ -34,7 +34,7 @@ Recherchez par nom d’objet ou en pinyin pour les noms chinois. `#Accessories` 
 
 ## Paramètres, triche et mode développeur
 
-La pause automatique est activée par défaut en solo et peut être désactivée. La partie continue en multijoueur. L’opacité du fond, la taille du texte et les raccourcis se règlent dans les paramètres.
+La pause automatique est activée par défaut en solo et peut être désactivée. La partie continue en multijoueur.
 
 Faites `Ctrl + clic gauche` sur l’icône d’outil pour basculer le mode triche. Cliquez sur un objet pour en obtenir un, ou maintenez Maj pour obtenir une pile. En activant aussi le mode développeur, vous pouvez obtenir les objets cachés que le jeu sait générer.
 

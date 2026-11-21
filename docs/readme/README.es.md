@@ -6,7 +6,7 @@ Consulta objetos, recetas, usos y formas de obtención desde el inventario de Ti
 
 ## Instalación
 
-Descarga `Just_Enough_Items_1.6.0.zip` en [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Coloca el ZIP sin descomprimir en la carpeta `mods` del juego y reinicia. Al actualizar, retira el ZIP anterior de JEI.
+Descarga `Just_Enough_Items_1.7.0.zip` en [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Coloca el ZIP sin descomprimir en la carpeta `mods` del juego y reinicia. Al actualizar, retira el ZIP anterior de JEI.
 
 La interfaz del mod está disponible en chino simplificado e inglés. Los nombres de los objetos y estaciones siguen el idioma del juego.
 
@@ -34,7 +34,7 @@ Busca por nombre de objeto, o por pinyin para nombres chinos. Usa `#Accessories`
 
 ## Ajustes, trucos y modo desarrollador
 
-La pausa automática está activada por defecto en partidas individuales y se puede desactivar en los ajustes. En multijugador la partida continúa. También puedes ajustar la opacidad del fondo, el tamaño del texto y los atajos.
+La pausa automática está activada por defecto en partidas individuales y se puede desactivar en los ajustes. En multijugador la partida continúa.
 
 Usa `Ctrl + clic izquierdo` en el icono de herramienta para activar o desactivar el modo de trucos. Un clic sobre un objeto da una unidad y con Mayús da una pila. Con el modo desarrollador activo también puedes obtener objetos ocultos que el juego pueda generar.
 

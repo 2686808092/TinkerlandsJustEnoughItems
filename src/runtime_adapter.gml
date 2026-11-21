@@ -220,7 +220,7 @@ function JEI_IMEWindow(_s) {
         }
         return;
     }
-    if (!_s.open || !_s.settings.imeFix || !window_get_fullscreen() || !window_get_borderless_fullscreen()) return;
+    if (!_s.settings.imeFix || !window_get_fullscreen() || !window_get_borderless_fullscreen()) return;
     _state.mode = _options.fullscreen;
     _state.border = window_get_showborder();
     JEI_ApplyIMEWindow(_state);

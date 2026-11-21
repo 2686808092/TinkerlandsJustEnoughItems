@@ -43,7 +43,8 @@ function JEI_AcquisitionAdd(_s, _value, _source) {
     if (_id <= 0 || array_length(JEI_Recipes(_s, _id)) > 0) return;
     var _key = string(_id);
     // Repeated rolls and visual variants must not flood a single item's list.
-    var _unique = _key + "|" + _source.kind + "|" + _source.name + "|" + string(_source.sprite);
+    var _visual = variable_struct_exists(_source, "chestType") ? string(_source.chestType) : string(_source.sprite);
+    var _unique = _key + "|" + _source.kind + "|" + _source.name + "|" + _visual;
     if (variable_struct_exists(_s.acquisitionSeen, _unique)) return;
     variable_struct_set(_s.acquisitionSeen, _unique, true);
     var _list = variable_struct_exists(_s.acquisitions, _key) ? variable_struct_get(_s.acquisitions, _key) : [];
@@ -205,7 +206,9 @@ function JEI_BuildAcquisitionRange(_s, _part, _from, _to) {
         if (!is_array(_object)) continue;
         var _name = JEI_AcquisitionObjectName(_objects, _object, "item", "source_container");
         var _icon = JEI_AcquisitionField(_db, _r, "icon", JEI_AcquisitionField(_objects, _object, "sprite"));
-        JEI_AcquisitionLoot(_s, JEI_AcquisitionField(_db, _r, "loot"), JEI_AcquisitionSource("source_chest", _name, _icon, "LOOT", _r));
+        var _source = JEI_AcquisitionSource("source_chest", _name, _icon, "LOOT", _r);
+        _source.chestType = _object[0];
+        JEI_AcquisitionLoot(_s, JEI_AcquisitionField(_db, _r, "loot"), _source);
     }
     var _tables = ["INTERACTABLE", "BLOCK", "TOP"];
     for (var _t = 0; _t < array_length(_tables); _t++) {

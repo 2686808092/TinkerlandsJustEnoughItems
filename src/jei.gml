@@ -38,7 +38,7 @@ function JEI_Text(_key) {
         source_crop: ["Harvest crops", "收获作物", "收穫作物"],
         source_break: ["Break scenery objects", "打破场景摆件", "打破場景擺件"],
         source_container: ["World chest", "场景宝箱", "場景寶箱"],
-        source_object: ["World resource (pictured)", "场景资源（见左图）", "場景資源（見左圖）"],
+        source_object: ["World resource (pictured)", "环境资源", "环境资源"],
         source_block: ["World block (pictured)", "场景方块（见左图）", "場景方塊（見左圖）"],
         station: ["Station: ", "制作台：", "製作台："],
         hand: ["By hand", "徒手制作", "徒手製作"],
@@ -99,6 +99,7 @@ function JEI_Init(_s) {
     _s.tooltipCache = undefined;
     _s.settings = JEI_Settings();
     _s.configTab = 0;
+    _s.sourceCollapsed = {};
     _s.binding = "";
     _s.bindingNotice = "";
     _s.byUses = {};
@@ -240,12 +241,9 @@ function JEI_Rebuild(_s) {
     _s.allRecipes = [];
     var _items = variable_global_get("__DB_ITEM");
     _s.itemCount = array_length(_items);
+    var _seen = {};
     for (var _i = 1; _i < array_length(_items); _i++) {
-        var _row = _items[_i];
-        if (is_array(_row) && array_length(_row) > 7 && _row[0] != 1024 && !is_undefined(_row[5]) && sprite_exists(_row[5])) {
-            // Mod records may carry a string key in field 0; catalog uses row indices.
-            array_push(_s.items, _i);
-        }
+        JEI_AddCatalogItem(_s, _i, _items[_i], _seen);
     }
     var _recipes = variable_global_get("__DB_RECIPE");
     _s.recipeCount = array_length(_recipes);
@@ -295,12 +293,14 @@ function JEI_RecipeRows(_s) {
 }
 
 function JEI_Select(_s, _id, _mode = "recipes") {
+    if (_mode == "uses" && array_length(JEI_Uses(_s, _id)) == 0) return;
     var _sameItem = _s.detailOpen && _s.selected == _id;
     if (_sameItem && _s.viewMode == _mode && _mode != "category") return;
     _s.selected = _id;
     _s.detailOpen = true;
     _s.viewMode = _mode;
     _s.category = "";
+    _s.sourceCollapsed = {};
     _s.detailPage = 0;
     _s.variant = 0;
     _s.recipeScroll = 0;
@@ -415,7 +415,7 @@ function JEI_BuildRecipeRow(_s, _row, _index) {
     var _recipe = {id: _row[0], item: _item, station: _row[3], amount: max(1, _row[5]), groups: _groups, cooking: false};
     JEI_AddRecipe(_s, _recipe);
     var _blueprint = JEI_BlueprintBase() + _index;
-    if (is_array(JEI_BlueprintRow(_blueprint))) {
+    if (is_array(JEI_BlueprintRow(_blueprint)) && JEI_BlueprintIndex(_row[0]) == _blueprint) {
         array_push(_s.items, _blueprint);
         variable_struct_set(_s.byUses, string(_blueprint), [_recipe]);
     }

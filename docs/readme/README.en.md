@@ -6,7 +6,7 @@ Browse items, recipes, uses, and acquisition sources inside the Tinkerlands inve
 
 ## Installation
 
-Download `Just_Enough_Items_1.6.0.zip` from [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Put the ZIP directly in the game's `mods` folder and restart. Remove the older JEI ZIP when upgrading.
+Download `Just_Enough_Items_1.7.0.zip` from [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Put the ZIP directly in the game's `mods` folder and restart. Remove the older JEI ZIP when upgrading.
 
 The mod interface is available in Simplified Chinese and English. Item and crafting station names follow the game's current language.
 
@@ -34,7 +34,7 @@ Use `$text` for descriptions, `%category` for categories, quotes for phrases, an
 
 ## Settings, cheats, and developer mode
 
-Single-player auto-pause is on by default and can be disabled in settings. Multiplayer continues running. Settings also include background opacity, text size, and key bindings.
+Single-player auto-pause is on by default and can be disabled in settings. Multiplayer continues running.
 
 `Ctrl-click` the tool icon to toggle cheat mode. Click a listed item for one item or Shift-click for a stack. With developer mode enabled too, you can obtain hidden items that the game can generate.
 

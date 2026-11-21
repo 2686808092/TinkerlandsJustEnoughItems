@@ -5,6 +5,12 @@ function JEI_SettingsText(_key, _mode) {
         no_uses: ["No recorded uses", "暂无已记录用途", "暫無已記錄用途"],
         general: ["General", "常规", "一般"],
         shortcuts: ["Key bindings", "快捷键", "快捷鍵"],
+        auto_pause_short: ["Auto-pause", "自动暂停"],
+        singleplayer_only: ["Single-player only", "仅单人模式"],
+        developer_short: ["Developer mode", "开发者模式"],
+        developer_note: ["Leave this off if you are unsure what it does.", "如果你不知道这个开关是干什么的，请不要打开它"],
+        expand: ["Show", "展开"],
+        collapse: ["Hide", "收起"],
         search_help: ["Search", "搜索", "搜尋"],
         auto_pause: ["Pause with inventory (singleplayer)", "人物栏自动暂停（单人）", "人物欄自動暫停（單人）"],
         backdrop: ["Background opacity", "底衬深度", "底襯深度"],
@@ -40,7 +46,7 @@ function JEI_SettingsText(_key, _mode) {
 }
 
 function JEI_DefaultSettings() {
-    return {autoPause: true, overlayEnabled: true, imeFix: true, opacity: 0.90, font: 1, bindings: {
+    return {autoPause: true, overlayEnabled: true, imeFix: true, opacity: 0.79, font: 1, bindings: {
         recipes: {key: 82, ctrl: false, shift: false, alt: false},
         uses: {key: 85, ctrl: false, shift: false, alt: false},
         overlay: {key: 79, ctrl: true, shift: false, alt: false},
@@ -58,8 +64,8 @@ function JEI_Settings() {
     _c.autoPause = ini_read_real("ui", "autoPause", 1) != 0;
     _c.overlayEnabled = ini_read_real("ui", "overlayEnabled", 1) != 0;
     _c.imeFix = ini_read_real("ui", "imeFix", 1) != 0;
-    _c.opacity = clamp(ini_read_real("ui", "opacity", 0.90), 0.6, 0.97);
-    if (ini_read_real("ui", "styleRevision", 0) < 1 && abs(_c.opacity - 0.82) < 0.001) _c.opacity = 0.90;
+    _c.opacity = clamp(ini_read_real("ui", "opacity", 0.79), 0.6, 0.97);
+    if (ini_read_real("ui", "styleRevision", 0) < 2 && (abs(_c.opacity - 0.90) < 0.001 || abs(_c.opacity - 0.82) < 0.001)) _c.opacity = 0.79;
     _c.font = clamp(ini_read_real("ui", "font", 1), 0.9, 1.2);
     var _names = JEI_BindingNames();
     for (var _i = 0; _i < array_length(_names); _i++) {
@@ -85,7 +91,7 @@ function JEI_SaveSettings(_s) {
     ini_write_real("ui", "overlayEnabled", _c.overlayEnabled);
     ini_write_real("ui", "imeFix", _c.imeFix);
     ini_write_real("ui", "opacity", _c.opacity);
-    ini_write_real("ui", "styleRevision", 1);
+    ini_write_real("ui", "styleRevision", 2);
     ini_write_real("ui", "font", _c.font);
     var _names = JEI_BindingNames();
     for (var _i = 0; _i < array_length(_names); _i++) {
@@ -144,24 +150,15 @@ function JEI_AssignBinding(_s, _name, _b) {
 function JEI_ConfigClick(_s, _l, _input) {
     if (!_input.leftPressed) return;
     if (JEI_Hit(_l.close, _input.x, _input.y)) { _s.configOpen = false; _s.binding = ""; return; }
-    var _tabs = ["general", "shortcuts", "search_help"];
-    for (var _i = 0; _i < 3; _i++) {
-        if (JEI_Hit(_l.tabs[_i], _input.x, _input.y)) { _s.configTab = _i; _s.binding = ""; _s.bindingNotice = ""; return; }
-    }
     if (_s.configTab == 0) {
-        var _changed = true;
-        if (JEI_Hit(_l.options[0], _input.x, _input.y)) _s.settings.autoPause = !_s.settings.autoPause;
-        else if (JEI_Hit(_l.options[1], _input.x, _input.y)) _s.settings.opacity = _s.settings.opacity < 0.85 ? 0.90 : (_s.settings.opacity < 0.95 ? 0.96 : 0.78);
-        else if (JEI_Hit(_l.options[2], _input.x, _input.y)) _s.settings.font = _s.settings.font < 1.05 ? 1.1 : (_s.settings.font < 1.15 ? 1.2 : 1);
-        else if (JEI_Hit(_l.options[3], _input.x, _input.y)) _s.settings.imeFix = !_s.settings.imeFix;
+        if (JEI_Hit(_l.tabs[1], _input.x, _input.y)) { _s.configTab = 1; _s.bindingNotice = ""; }
+        else if (JEI_Hit(_l.options[0], _input.x, _input.y)) { _s.settings.autoPause = !_s.settings.autoPause; JEI_SaveSettings(_s); }
         else if (JEI_Hit(_l.developer, _input.x, _input.y)) JEI_ToggleDeveloper(_s);
-        else if (JEI_Hit(_l.reset, _input.x, _input.y)) _s.settings = JEI_DefaultSettings();
-        else _changed = false;
-        if (_changed) JEI_SaveSettings(_s);
-    } else if (_s.configTab == 1) {
-        var _names = JEI_BindingNames();
-        for (var _i = 0; _i < array_length(_names); _i++) {
-            if (JEI_Hit(_l.bindings[_i], _input.x, _input.y)) { _s.binding = _names[_i]; _s.bindingNotice = ""; break; }
-        }
+        return;
+    }
+    if (JEI_Hit(_l.tabs[0], _input.x, _input.y)) { _s.configTab = 0; _s.binding = ""; return; }
+    var _names = JEI_BindingNames();
+    for (var _i = 0; _i < array_length(_names); _i++) {
+        if (JEI_Hit(_l.bindings[_i], _input.x, _input.y)) { _s.binding = _names[_i]; _s.bindingNotice = ""; return; }
     }
 }

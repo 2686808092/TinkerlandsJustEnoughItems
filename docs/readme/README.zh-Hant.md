@@ -6,7 +6,7 @@
 
 ## 安裝
 
-從[GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest)下載 `Just_Enough_Items_1.6.0.zip`，將 ZIP 原樣放入遊戲的 `mods` 資料夾，然後重新啟動遊戲。升級時請移除舊版 JEI ZIP。
+從[GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest)下載 `Just_Enough_Items_1.7.0.zip`，將 ZIP 原樣放入遊戲的 `mods` 資料夾，然後重新啟動遊戲。升級時請移除舊版 JEI ZIP。
 
 模組介面提供簡體中文和英文，物品與工作站名稱沿用遊戲目前的語言。
 
@@ -34,7 +34,7 @@
 
 ## 設定、作弊與開發者模式
 
-單人模式預設自動暫停，可在設定中關閉。多人連線時遊戲持續執行。設定也可調整底襯透明度、字體大小和快捷鍵。
+單人模式預設自動暫停，可在設定中關閉。多人連線時遊戲持續執行。
 
 在工具圖示上使用 `Ctrl＋左鍵` 切換作弊模式。點選列表物品可取得一個，按住 Shift 點選可取得一組。同時開啟開發者模式時，可取得遊戲能生成的隱藏物品。
 

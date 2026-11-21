@@ -6,7 +6,7 @@ Just Enough Items for Tinkerlands 是一款游戏内物品与配方查询模组�
 
 ## 安装
 
-在 [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) 下载 `Just_Enough_Items_1.6.0.zip`，将 ZIP 原样放入 Tinkerlands 安装目录的 `mods` 文件夹，再启动游戏。升级时移除旧版 JEI ZIP，避免同时加载两个版本。
+在 [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) 下载 `Just_Enough_Items_1.7.0.zip`，将 ZIP 原样放入 Tinkerlands 安装目录的 `mods` 文件夹，再启动游戏。升级时移除旧版 JEI ZIP，避免同时加载两个版本。
 
 模组界面提供简体中文和英文。物品和工作站名称沿用游戏当前的译名，也支持已加载的汉化模组。
 
@@ -46,7 +46,7 @@ Just Enough Items for Tinkerlands 是一款游戏内物品与配方查询模组�
 
 ## 设置、作弊和开发者模式
 
-单人默认在打开人物栏时自动暂停，可在设置中关闭。联机时游戏继续运行。设置中还可调整底衬透明度、字体大小和快捷键。
+单人默认在打开人物栏时自动暂停，可在设置中关闭。联机时游戏继续运行。设置中还可调整快捷键和开启开发者模式。
 
 按住 `Ctrl` 左键点击工具图标可切换作弊获取。开启后，在列表中点击物品获取一个，按住 `Shift` 点击可获取一组。设置中的开发者模式会显示更多隐藏条目，并启用 ID 搜索。两种模式同时开启时，可获取其中能由游戏生成的物品。
 

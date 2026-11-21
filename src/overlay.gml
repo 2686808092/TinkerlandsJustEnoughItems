@@ -18,48 +18,64 @@ function JEI_Layout(_s, _gw, _gh) {
         next: JEI_Rect(366 * _z, _top - 36 * _z, 34 * _z, 30 * _z),
         search: JEI_Rect(12 * _z, _gh - 54 * _z, 364 * _z, 46 * _z),
         toggle: JEI_Rect(376 * _z, _gh - 54 * _z, 40 * _z, 46 * _z),
-        materialSlots: [], cubeSlots: [], sourceSlots: [], tabs: [], options: [], bindings: [],
+        materialSlots: [], cubeSlots: [], sourceSlots: [], sourceGroups: [], tabs: [], options: [], bindings: [],
         popup: [0, 0, 0, 0], header: [0, 0, 0, 0], close: [0, 0, 0, 0],
         category: [0, 0, 0, 0], variant: [0, 0, 0, 0],
         recipePrevious: [0, 0, 0, 0], recipeNext: [0, 0, 0, 0],
         materialPrevious: [0, 0, 0, 0], materialNext: [0, 0, 0, 0],
         transfer: [0, 0, 0, 0], outputSlot: [0, 0, 0, 0], outputItem: -1, detailPages: 1, variants: 0};
-    var _pw = (_s.configOpen ? 760 : 578) * _z;
+    var _pw = 650 * _z;
     var _view = JEI_ViewRecipes(_s);
     var _compact = array_length(_view) > 0 && _view[clamp(_s.variant, 0, array_length(_view) - 1)].provider != "cube" &&
         array_length(_view[clamp(_s.variant, 0, array_length(_view) - 1)].groups) <= 3;
-    var _ph = (_s.configOpen ? 600 : (_compact ? 320 : 420)) * _z;
-    if (!_s.positioned) { _s.x = max(_w + 32 * _z, _gw * 0.32); _s.y = _gh * 0.2; _s.positioned = true; }
+    var _ph = (_s.configOpen ? (_s.configTab == 0 ? 284 : 444) : (_compact ? 320 : 449)) * _z;
+    if (!_s.positioned) { _s.x = max(_w + 16 * _z, _gw * 0.56 - _pw / 2); _s.y = _gh * 0.11; _s.positioned = true; }
     var _px = clamp(_s.x, _w + 8 * _z, max(_w + 8 * _z, _gw - _pw - 8 * _z));
     var _py = clamp(_s.y, 8 * _z, max(8 * _z, _gh - _ph - 8 * _z));
     _l.popup = JEI_Rect(_px, _py, _pw, _ph);
-    _l.header = JEI_Rect(_px, _py, _pw - 42 * _z, 44 * _z);
-    _l.close = JEI_Rect(_px + _pw - 42 * _z, _py + 4 * _z, 36 * _z, 36 * _z);
+    _l.header = JEI_Rect(_px + 20 * _z, _py + 16 * _z, _pw - 66 * _z, 65 * _z);
+    _l.close = JEI_Rect(_px + _pw - 42 * _z, _py + 19 * _z, 28 * _z, 28 * _z);
     if (_s.configOpen) {
         _l.panel = _l.popup;
-        for (var _i = 0; _i < 3; _i++) array_push(_l.tabs, JEI_Rect(_px + (16 + _i * 243) * _z, _py + 56 * _z, 240 * _z, 40 * _z));
-        for (var _i = 0; _i < 4; _i++) array_push(_l.options, JEI_Rect(_px + 20 * _z, _py + (112 + _i * 60) * _z, 720 * _z, 50 * _z));
-        _l.developer = JEI_Rect(_px + 20 * _z, _py + 366 * _z, 720 * _z, 96 * _z);
-        _l.reset = JEI_Rect(_px + 20 * _z, _py + 504 * _z, 720 * _z, 50 * _z);
-        for (var _i = 0; _i < array_length(JEI_BindingNames()); _i++) array_push(_l.bindings, JEI_Rect(_px + 20 * _z, _py + (112 + _i * 56) * _z, 720 * _z, 50 * _z));
+        _l.tabs = [JEI_Rect(_px + 25 * _z, _py + 84 * _z, 600 * _z, 42 * _z),
+            JEI_Rect(_px + 25 * _z, _py + 146 * _z, 600 * _z, 56 * _z)];
+        array_push(_l.options, JEI_Rect(_px + 25 * _z, _py + 89 * _z, 600 * _z, 56 * _z));
+        _l.developer = JEI_Rect(_px + 25 * _z, _py + 203 * _z, 600 * _z, 57 * _z);
+        for (var _i = 0; _i < array_length(JEI_BindingNames()); _i++) array_push(_l.bindings, JEI_Rect(_px + 25 * _z, _py + (132 + _i * 44) * _z, 600 * _z, 42 * _z));
         return _l;
     }
     if (!_s.detailOpen) return _l;
-    _l.category = JEI_Rect(_px + 80 * _z, _py + 4 * _z, 408 * _z, 36 * _z);
-    _l.variant = JEI_Rect(_px + 16 * _z, _py + 86 * _z, 546 * _z, 30 * _z);
+    _l.category = JEI_Rect(_px + 24 * _z, _py + 86 * _z, 466 * _z, 36 * _z);
+    _l.variant = JEI_Rect(_px + 504 * _z, _py + 87 * _z, 119 * _z, 30 * _z);
     _l.recipePrevious = JEI_Rect(_l.variant[0], _l.variant[1], 32 * _z, 30 * _z);
     _l.recipeNext = JEI_Rect(_l.variant[2] - 32 * _z, _l.variant[1], 32 * _z, 30 * _z);
-    _l.card = JEI_Rect(_px + 16 * _z, _py + 128 * _z, 546 * _z, _ph - 148 * _z);
+    _l.card = JEI_Rect(_px + 16 * _z, _py + 125 * _z, 618 * _z, _ph - 152 * _z);
     var _recipes = JEI_ViewRecipes(_s);
     _l.variants = array_length(_recipes);
     if (_l.variants == 0) {
         var _sources = _s.viewMode == "recipes" ? JEI_Acquisitions(_s, _s.selected) : [];
-        _l.detailPages = max(1, ceil(array_length(_sources) / 5));
+        var _buckets = {}; var _kinds = []; var _entries = [];
+        for (var _i = 0; _i < array_length(_sources); _i++) {
+            var _source = _sources[_i]; var _kind = _source.kind;
+            if (!variable_struct_exists(_buckets, _kind)) array_push(_kinds, _kind);
+            var _bucket = variable_struct_exists(_buckets, _kind) ? variable_struct_get(_buckets, _kind) : [];
+            array_push(_bucket, _source); variable_struct_set(_buckets, _kind, _bucket);
+        }
+        for (var _i = 0; _i < array_length(_kinds); _i++) {
+            var _kind = _kinds[_i]; var _bucket = variable_struct_get(_buckets, _kind);
+            var _collapsed = variable_struct_exists(_s.sourceCollapsed, _kind);
+            array_push(_entries, {kind:_kind, count:array_length(_bucket), collapsed:_collapsed});
+            if (!_collapsed) for (var _j = 0; _j < array_length(_bucket); _j++) array_push(_entries, {source:_bucket[_j]});
+        }
+        _l.detailPages = max(1, ceil(array_length(_entries) / 5));
         _s.detailPage = clamp(_s.detailPage, 0, _l.detailPages - 1);
         for (var _i = 0; _i < 5; _i++) {
             var _index = _s.detailPage * 5 + _i;
-            if (_index >= array_length(_sources)) break;
-            array_push(_l.sourceSlots, {rect: JEI_Rect(_px + 24 * _z, _py + (132 + _i * 52) * _z, 530 * _z, 50 * _z), source: _sources[_index]});
+            if (_index >= array_length(_entries)) break;
+            var _entry = _entries[_index];
+            _entry.rect = JEI_Rect(_px + 25 * _z, _py + (130 + _i * 55) * _z, 600 * _z, 51 * _z);
+            if (variable_struct_exists(_entry, "source")) array_push(_l.sourceSlots, _entry);
+            else array_push(_l.sourceGroups, _entry);
         }
         return _l;
     }
@@ -68,12 +84,12 @@ function JEI_Layout(_s, _gw, _gh) {
     _l.outputItem = _recipe.item;
     _l.outputAmount = _recipe.amount;
     var _flowY = (_l.card[1] + _l.card[3]) / 2 - 14 * _z;
-    var _materialStart = _px + 105 * _z;
-    var _materialEnd = _px + 275 * _z;
+    var _materialStart = _px + 74 * _z;
+    var _materialEnd = _materialStart + 242 * _z;
     if (_recipe.provider == "cube" && array_length(_recipe.grid) == 3) {
         for (var _cx = 0; _cx < 3; _cx++) for (var _cy = 0; _cy < 3; _cy++) {
             var _cell = _recipe.grid[_cx][_cy];
-            array_push(_l.cubeSlots, {rect: JEI_Rect(_px + (105 + _cx * 58) * _z, _flowY + (-85 + _cy * 58) * _z, 54 * _z, 54 * _z),
+            array_push(_l.cubeSlots, {rect: JEI_Rect(_px + (111 + _cx * 56) * _z, _flowY + (-83 + _cy * 56) * _z, 54 * _z, 54 * _z),
                 id: _cell.id, amount: _cell.amount, alternatives: 1});
         }
     } else {
@@ -104,6 +120,7 @@ function JEI_Layout(_s, _gw, _gh) {
     var _shift = _flowLeft - _materialStart;
     var _slots = array_concat(_l.materialSlots, _l.cubeSlots);
     for (var _i = 0; _i < array_length(_slots); _i++) { _slots[_i].rect[0] += _shift; _slots[_i].rect[2] += _shift; }
+    if (array_length(_l.cubeSlots) > 0) _l.cubeHousing = JEI_Rect(_flowLeft, _flowY - 92 * _z, 242 * _z, 184 * _z);
     _l.outputSlot = JEI_Rect(_flowLeft + _inputWidth + 120 * _z, _l.flowY - 34 * _z, 68 * _z, 68 * _z);
     _l.arrowX = _flowLeft + _inputWidth + 60 * _z;
     if (!is_undefined(JEI_API().transferRecipe)) _l.transfer = JEI_Rect(_px + 530 * _z, _py + _ph - 54 * _z, 28 * _z, 28 * _z);
@@ -202,6 +219,13 @@ function JEI_Frame(_s, _input, _gw, _gh, _l = undefined) {
         return _action;
     }
     if (_input.leftPressed) {
+        if (_insideDetail) for (var _i = 0; _i < array_length(_l.sourceGroups); _i++) {
+            var _group = _l.sourceGroups[_i];
+            if (!JEI_Hit(_group.rect, _input.x, _input.y)) continue;
+            if (_group.collapsed) variable_struct_remove(_s.sourceCollapsed, _group.kind);
+            else variable_struct_set(_s.sourceCollapsed, _group.kind, true);
+            return _action;
+        }
         if (JEI_Hit(_l.toggle, _input.x, _input.y)) JEI_ToolbarAction(_s, _input);
         else if (_insideDetail && JEI_Hit(_l.close, _input.x, _input.y)) _s.detailOpen = false;
         else if (_insideDetail && JEI_Hit(_l.category, _input.x, _input.y) && _l.variants > 0) {
@@ -255,7 +279,7 @@ function JEI_Arrow(_r, _direction, _active, _s, _z) {
 function JEI_DrawBackdrop(_s, _l) {
     // Keep the approved sidebar-only backing below the native HUD.
     // The recipe/settings popup paints its own backing in Draw GUI End.
-    JEI_Fill(_l.sidebar, JEI_SurfaceColor(), _s.settings.opacity);
+    JEI_Fill(_l.sidebar, make_color_rgb(50, 37, 39), _s.settings.opacity);
 }
 
 function JEI_DrawToolbar(_s, _l) {
@@ -283,7 +307,8 @@ function JEI_DrawCatalog(_s, _l, _cream, _muted) {
         var _y = _l.grid[1] + floor(_i / 8) * _l.slot;
         var _r = JEI_Rect(_x + _z, _y + _z, _l.slot - 2 * _z, _l.slot - 2 * _z);
         if (_s.hover == _id || _s.detailOpen && _s.selected == _id) JEI_Fill(_r, _cream, _s.hover == _id ? 0.24 : 0.12);
-        JEI_Icon(_id, _x + _l.slot / 2, _y + _l.slot / 2, 40 * _z);
+        JEI_Icon(_id, _x + _l.slot / 2, _y + _l.slot / 2, 46 * _z);
+        if (JEI_IsBlueprint(_id)) JEI_Icon(1024, _x + _l.slot - 11 * _z, _y + _l.slot - 11 * _z, 16 * _z);
     }
     if (array_length(_s.filtered) == 0) JEI_Label(_l.w / 2, _l.grid[1] + 60 * _z, JEI_Text(_s.catalogReady ? "empty" : "loading"), 1.8 * _z, 5, _muted);
     var _footer = [_l.search[0], _l.search[1], _l.toggle[2], _l.toggle[3]];
@@ -320,25 +345,69 @@ function JEI_SearchField(_s, _l) {
     return _cache;
 }
 
-function JEI_DrawSlot(_s, _entry, _z, _cream, _label = true) {
+function JEI_DrawSlot(_s, _entry, _z, _ink, _cube = false, _label = true) {
     var _r = _entry.rect;
-    JEI_Box(_s, _r, _entry.id >= 0 && _s.hover == _entry.id, _z);
+    var _sprite = asset_get_index(_cube ? "sprGUIIngameEquipmentSlotCube" : "sprGUIIngameInventorySlot");
+    JEI_DrawTile(_sprite, _r);
     if (_entry.id < 0) return;
-    JEI_Icon(_entry.id, (_r[0] + _r[2]) / 2, (_r[1] + _r[3]) / 2, _r[2] - _r[0] - 14 * _z);
-    if (_entry.amount > 1) JEI_Label(_r[2] - 3 * _z, _r[3] - 8 * _z, string(_entry.amount), 1.6 * _z, 6, _cream);
-    if (_label) JEI_Label((_r[0] + _r[2]) / 2, _r[3] + 16 * _z, JEI_FitWidth(JEI_Name(_entry.id), 1.55 * _z * _s.settings.font, 92 * _z), 1.55 * _z * _s.settings.font, 5, _cream);
+    var _cx = (_r[0] + _r[2]) / 2;
+    var _cy = (_r[1] + _r[3]) / 2;
+    if (_s.hover == _entry.id) JEI_Fill(_r, c_white, 0.16);
+    JEI_Icon(_entry.id, _cx, _cy - (_cube ? 5 * _z : 0), (_cube ? 35 : 54) * _z);
+    var _count = _entry.amount > 1 ? string(_entry.amount) : "";
+    if (_count != "" && _cube) {
+        JEI_Label(_r[2] - 4 * _z, _r[3] - 8 * _z, _count, 1.3 * _z, 6, c_white);
+    }
+    if (_label) {
+        var _scale = 1.65 * _z * _s.settings.font;
+        var _suffix = _count == "" ? "" : (JEI_Locale() == 1 ? " ×" : " x") + _count;
+        var _fit = JEI_FitWidth(JEI_Name(_entry.id), _scale, 94 * _z - JEI_TextWidth(_suffix, _scale));
+        JEI_Label(_cx, _r[3] + 14 * _z, _fit + _suffix, _scale, 5, _ink);
+    }
 }
 
-function JEI_DrawPopupFrame(_s, _l, _title) {
-    var _r = _l.popup;
-    JEI_Fill(_r, JEI_SurfaceColor(), _s.settings.opacity);
-    draw_set_color(make_color_rgb(137, 113, 93));
-    draw_rectangle(_r[0], _r[1], _r[2], _r[3], true);
-    draw_set_color(c_white);
-    JEI_Fill([_r[0] + _l.z, _r[1] + _l.z, _r[2] - _l.z, _r[1] + 44 * _l.z], JEI_SurfaceColor(), 0.18);
-    JEI_Label((_r[0] + _r[2]) / 2, _r[1] + 24 * _l.z, _title, 1.9 * _l.z * _s.settings.font, 5);
-    JEI_Box(_s, _l.close, false, _l.z);
-    JEI_Label((_l.close[0] + _l.close[2]) / 2, (_l.close[1] + _l.close[3]) / 2, "X", 1.8 * _l.z, 5);
+function JEI_DrawTile(_sprite, _rect) {
+    if (!sprite_exists(_sprite)) return;
+    var _w = sprite_get_width(_sprite); var _h = sprite_get_height(_sprite);
+    draw_sprite_part_ext(_sprite, 0, 0, 0, _w, _h, _rect[0], _rect[1],
+        (_rect[2] - _rect[0]) / _w, (_rect[3] - _rect[1]) / _h, c_white, 1);
+}
+
+function JEI_DrawPopupFrame(_s, _l, _title, _item = -1) {
+    var _r = _l.popup; var _z = _l.z; var _border = max(4, round(17 * _z));
+    var _left = round(_r[0]); var _top = round(_r[1]);
+    var _right = round(_r[2]); var _bottom = round(_r[3]);
+    JEI_Fill([_left + _border - 1, _top + _border - 1, _right - _border, _bottom - _border], make_color_rgb(215, 179, 142));
+    var _sprite = asset_get_index("sprGUIIngameEquipmentContainer");
+    if (sprite_exists(_sprite)) {
+        var _w = sprite_get_width(_sprite); var _h = sprite_get_height(_sprite);
+        var _sx = [0, 9, _w - 9, _w]; var _sy = [0, 9, _h - 9, _h];
+        var _dx = [_left, _left + _border, _right - _border, _right];
+        var _dy = [_top, _top + _border, _bottom - _border, _bottom];
+        for (var _x = 0; _x < 3; _x++) for (var _y = 0; _y < 3; _y++) {
+            if (_x == 1 && _y == 1) continue;
+            var _sw = _sx[_x + 1] - _sx[_x]; var _sh = _sy[_y + 1] - _sy[_y];
+            draw_sprite_part_ext(_sprite, 0, _sx[_x], _sy[_y], _sw, _sh, _dx[_x], _dy[_y],
+                (_dx[_x + 1] - _dx[_x]) / _sw, (_dy[_y + 1] - _dy[_y]) / _sh, c_white, 1);
+        }
+    }
+    var _ink = make_color_rgb(68, 39, 39);
+    var _titleX = _left + 26 * _z;
+    if (_item >= 0) {
+        JEI_Icon(_item, _left + 44 * _z, _top + 46 * _z, 38 * _z);
+        _titleX += 46 * _z;
+    }
+    var _scale = 2.2 * _z * _s.settings.font;
+    var _fit = JEI_FitWidth(_title, _scale, _r[2] - _titleX - 61 * _z);
+    JEI_Label(_titleX, _top + (_item >= 0 ? 36 : 45) * _z, _fit, _scale, 4, _ink);
+    if (_item >= 0) {
+        var _doc = variable_struct_get(_s.searchDocs, string(_item));
+        var _origin = is_struct(_doc) ? _doc.origin : "Tinkerlands";
+        JEI_Label(_titleX, _top + 61 * _z, _origin, 1.5 * _z, 4, _ink);
+    }
+    JEI_Fill(JEI_Rect(_left + 24 * _z, _top + 79 * _z, _right - _left - 48 * _z, max(1, _z)), make_color_rgb(160, 112, 90));
+    JEI_Fill(_l.close, make_color_rgb(111, 67, 53));
+    JEI_Label((_l.close[0] + _l.close[2]) / 2, (_l.close[1] + _l.close[3]) / 2, "X", 1.8 * _z, 5, c_white);
 }
 
 function JEI_StationItem(_recipe) {
@@ -348,105 +417,108 @@ function JEI_StationItem(_recipe) {
     return JEI_NativeItemIndex(JEI_AcquisitionField(_db, _row, "item"));
 }
 
-function JEI_DrawRecipe(_s, _l, _cream, _muted) {
+function JEI_DrawRecipe(_s, _l, _ink, _muted) {
     var _z = _l.z; var _x = _l.popup[0]; var _y = _l.popup[1];
     var _recipes = JEI_ViewRecipes(_s);
     var _has = array_length(_recipes) > 0;
-    var _r = _has ? _recipes[_s.variant] : undefined;
-    var _title = _has ? JEI_StationName(_r) : (_s.viewMode == "uses" ? JEI_Text("uses") : JEI_Text("acquisition"));
-    if (!_has && _s.viewMode == "recipes") {
-        var _count = array_length(JEI_Acquisitions(_s, _s.selected));
-        if (_count > 0) _title += " (" + string(_count) + ")";
-    }
-    JEI_DrawPopupFrame(_s, _l, _has ? "" : _title);
-    var _center = (_l.popup[0] + _l.popup[2]) / 2;
+    var _uses = _s.viewMode == "uses";
+    JEI_DrawPopupFrame(_s, _l, JEI_Name(_s.selected), _s.selected);
     if (_has) {
+        var _r = _recipes[_s.variant];
         var _station = JEI_StationItem(_r);
-        var _scale = 1.9 * _z * _s.settings.font;
-        var _lead = _station >= 0 ? 44 * _z : 0;
-        _title = JEI_FitWidth(_title, _scale, 408 * _z - _lead);
-        var _width = JEI_TextWidth(_title, _scale);
-        var _left = _center - (_width + _lead) / 2;
-        if (_station >= 0) JEI_Icon(_station, _left + 17 * _z, _y + 24 * _z, 34 * _z);
-        JEI_Label(_left + _lead, _y + 24 * _z, _title, _scale, 4, _cream);
+        var _label = JEI_StationName(_r);
+        if (_uses) _label = JEI_Text("uses") + " · " + _label;
+        if (_station >= 0) JEI_Icon(_station, _x + 39 * _z, _y + 103 * _z, 26 * _z);
+        var _size = 1.8 * _z * _s.settings.font;
+        var _fit = JEI_FitWidth(_label, _size, 427 * _z);
+        JEI_Label(_x + 60 * _z, _y + 103 * _z, _fit, _size, 4, _ink);
+    } else {
+        var _count = _uses ? 0 : array_length(JEI_Acquisitions(_s, _s.selected));
+        if (_count > 0) {
+            var _label = JEI_Text("acquisition") + " (" + string(_count) + ")";
+            JEI_Label(_x + 25 * _z, _y + 103 * _z, _label, 1.8 * _z, 4, _ink);
+        }
     }
-    var _name = JEI_Name(_s.selected);
-    if (_s.viewMode == "uses") _name = JEI_Text("uses") + ": " + _name;
-    _name = JEI_FitWidth(_name, 2 * _z * _s.settings.font, 398 * _z);
-    JEI_Label(_center, _y + 64 * _z, _name, 2 * _z * _s.settings.font, 5, _cream);
     var _page = _has ? _s.variant : _s.detailPage;
     var _pages = _has ? _l.variants : _l.detailPages;
-    JEI_Box(_s, _l.variant, false, _z);
-    JEI_Label(_x + 289 * _z, _y + 101 * _z, string(_page + 1) + " / " + string(_pages), 1.8 * _z, 5, _cream);
-    JEI_Arrow(_l.recipePrevious, -1, _page > 0, _s, _z);
-    JEI_Arrow(_l.recipeNext, 1, _page + 1 < _pages, _s, _z);
+    if (_pages > 1) {
+        var _pageText = string(_page + 1) + " / " + string(_pages);
+        JEI_Label(_x + 564 * _z, _y + 103 * _z, _pageText, 1.5 * _z, 5, _ink);
+        JEI_Arrow(_l.recipePrevious, -1, _page > 0, _s, _z);
+        JEI_Arrow(_l.recipeNext, 1, _page + 1 < _pages, _s, _z);
+    }
     if (!_has) {
-        if (_s.viewMode != "uses" && !_s.acquisitionsReady && array_length(_l.sourceSlots) == 0) JEI_Label(_center, _y + 220 * _z, JEI_Text("loading"), 1.8 * _z, 5, _muted);
+        if (!_uses && !_s.acquisitionsReady && array_length(_l.sourceSlots) == 0) JEI_Label(_x + 325 * _z, _y + 220 * _z, JEI_Text("loading"), 1.8 * _z, 5, _muted);
+        for (var _i = 0; _i < array_length(_l.sourceGroups); _i++) {
+            var _group = _l.sourceGroups[_i]; var _gr = _group.rect;
+            var _arrow = asset_get_index(_group.collapsed ? "sprGUIIngameArrowRight" : "sprGUIIngameArrowDown");
+            JEI_Fill(_gr, make_color_rgb(192, 150, 117), JEI_Hit(_gr, _s.pointerX, _s.pointerY) ? 0.8 : 0.44);
+            JEI_SpriteIcon(_arrow, _gr[0] + 16 * _z, _gr[1] + 24 * _z, 15 * _z);
+            JEI_Label(_gr[0] + 33 * _z, _gr[1] + 24 * _z, JEI_Text(_group.kind), 1.65 * _z, 4, _ink);
+            JEI_Label(_gr[2] - 12 * _z, _gr[1] + 24 * _z, string(_group.count), 1.5 * _z, 6, _ink);
+        }
         for (var _i = 0; _i < array_length(_l.sourceSlots); _i++) {
             var _entry = _l.sourceSlots[_i]; var _source = _entry.source; var _sr = _entry.rect;
-            JEI_SpriteIcon(_source.sprite, _sr[0] + 22 * _z, _sr[1] + 25 * _z, 36 * _z);
+            JEI_Fill(JEI_Rect(_sr[0], _sr[3] - _z, _sr[2] - _sr[0], max(1, _z)), make_color_rgb(174, 130, 104));
+            JEI_SpriteIcon(_source.sprite, _sr[0] + 22 * _z, _sr[1] + 25 * _z, 34 * _z);
             JEI_Label(_sr[0] + 52 * _z, _sr[1] + 12 * _z, JEI_Text(_source.kind), 1.35 * _z * _s.settings.font, 4, _muted);
-            JEI_Label(_sr[0] + 52 * _z, _sr[1] + 34 * _z, JEI_Fit(_source.name, JEI_Locale() == 0 ? 44 : 26), 1.7 * _z * _s.settings.font, 4, _cream);
+            JEI_Label(_sr[0] + 52 * _z, _sr[1] + 34 * _z, JEI_Fit(_source.name, JEI_Locale() == 0 ? 44 : 26), 1.7 * _z * _s.settings.font, 4, _ink);
+            if (JEI_Hit(_sr, _s.pointerX, _s.pointerY)) _l.hoverSource = _source;
         }
-        if (_s.viewMode == "uses" && array_length(_l.sourceSlots) == 0) JEI_Label(_x + 289 * _z, _y + 220 * _z, JEI_Text("no_uses"), 1.8 * _z, 5, _muted);
         return;
     }
-    JEI_Box(_s, _l.card, false, _z, false);
-    for (var _i = 0; _i < array_length(_l.materialSlots); _i++) JEI_DrawSlot(_s, _l.materialSlots[_i], _z, _cream);
-    for (var _i = 0; _i < array_length(_l.cubeSlots); _i++) JEI_DrawSlot(_s, _l.cubeSlots[_i], _z, _cream, false);
-    JEI_DrawSlot(_s, {rect: _l.outputSlot, id: _l.outputItem, amount: _l.outputAmount}, _z, _cream);
-    JEI_Fill(JEI_Rect(_l.arrowX - 18 * _z, _l.flowY - 3 * _z, 24 * _z, 6 * _z), _muted);
-    for (var _i = 0; _i < 4; _i++) JEI_Fill(JEI_Rect(_l.arrowX + (6 + _i * 3) * _z, _l.flowY - (10 - _i * 3) * _z, 3 * _z, (20 - _i * 6) * _z), _muted);
+    var _cube = array_length(_l.cubeSlots) > 0;
+    if (_cube) {
+        var _housing = asset_get_index("sprGUIIngameCubeContainer");
+        JEI_DrawTile(_housing, _l.cubeHousing);
+        for (var _i = 0; _i < array_length(_l.cubeSlots); _i++) JEI_DrawSlot(_s, _l.cubeSlots[_i], _z, _ink, true, false);
+        var _arrow = asset_get_index("sprGUIIngameArrowRight");
+        JEI_SpriteIcon(_arrow, _l.arrowX, _l.flowY, 29 * _z);
+    } else {
+        for (var _i = 0; _i < array_length(_l.materialSlots); _i++) JEI_DrawSlot(_s, _l.materialSlots[_i], _z, _ink);
+        var _arrow = asset_get_index("sprGUIIngameArrowRight");
+        JEI_SpriteIcon(_arrow, _l.arrowX, _l.flowY, 26 * _z);
+    }
+    JEI_DrawSlot(_s, {rect: _l.outputSlot, id: _l.outputItem, amount: _l.outputAmount}, _z, _ink, false, !_cube);
+    if (_cube && _l.outputAmount > 1) JEI_Label(_l.outputSlot[2] - 4 * _z, _l.outputSlot[3] - 8 * _z, string(_l.outputAmount), 1.3 * _z, 6, _ink);
     if (_l.detailPages > 1) {
         JEI_Arrow(_l.materialPrevious, -1, _s.detailPage > 0, _s, _z);
         JEI_Arrow(_l.materialNext, 1, _s.detailPage + 1 < _l.detailPages, _s, _z);
-        JEI_Label(_x + 190 * _z, _y + 382 * _z, string(_s.detailPage + 1) + " / " + string(_l.detailPages), 1.4 * _z, 5, _muted);
+        JEI_Label(_x + 190 * _z, _y + 382 * _z, string(_s.detailPage + 1) + " / " + string(_l.detailPages), 1.4 * _z, 5, _ink);
     }
     if (_l.transfer[2] > 0) { JEI_Box(_s, _l.transfer, false, _z); JEI_Label((_l.transfer[0] + _l.transfer[2]) / 2, (_l.transfer[1] + _l.transfer[3]) / 2, "+", 1.8 * _z, 5); }
 }
 
-function JEI_DrawConfig(_s, _l, _cream, _muted) {
-    var _z = _l.z; var _x = _l.popup[0]; var _y = _l.popup[1]; var _font = _s.settings.font;
+function JEI_ConfigRow(_s, _r, _z, _name, _value, _note = "") {
+    var _ink = make_color_rgb(68, 39, 39);
+    var _mid = (_r[1] + _r[3]) / 2;
+    JEI_Fill(JEI_Rect(_r[0], _r[3] - _z, _r[2] - _r[0], max(1, _z)), make_color_rgb(174, 130, 104));
+    var _button = JEI_Rect(_r[2] - 77 * _z, _mid - 15 * _z, 75 * _z, 30 * _z);
+    JEI_Fill(_button, make_color_rgb(111, 67, 53));
+    JEI_Label(_r[0] + 4 * _z, _mid - (_note == "" ? 0 : 9 * _z), _name, 1.8 * _z, 4, _ink);
+    var _noteFit = JEI_FitWidth(_note, 1.33 * _z, 504 * _z);
+    if (_noteFit != "") JEI_Label(_r[0] + 4 * _z, _mid + 13 * _z, _noteFit, 1.33 * _z, 4, _ink);
+    var _scale = min(1.5 * _z, 69 * _z / max(1, JEI_TextWidth(_value, 1)));
+    JEI_Label(_r[2] - 39 * _z, _mid, _value, _scale, 5, c_white);
+}
+
+function JEI_DrawConfig(_s, _l, _ink, _muted) {
+    var _z = _l.z; var _x = _l.popup[0]; var _y = _l.popup[1];
     JEI_DrawPopupFrame(_s, _l, JEI_Text("config"));
-    var _tabs = ["general", "shortcuts", "search_help"];
-    for (var _i = 0; _i < 3; _i++) {
-        var _r = _l.tabs[_i]; JEI_Box(_s, _r, _s.configTab == _i, _z);
-        JEI_Label((_r[0] + _r[2]) / 2, (_r[1] + _r[3]) / 2, JEI_Text(_tabs[_i]), 1.8 * _z, 5, _cream);
-    }
     if (_s.configTab == 0) {
-        var _names = ["auto_pause", "backdrop", "font_size", "ime_fix"];
-        var _values = [JEI_Text(_s.settings.autoPause ? "setting_on" : "setting_off"), string(round(_s.settings.opacity * 100)) + "%", string(round(_font * 100)) + "%", JEI_Text(_s.settings.imeFix ? "setting_on" : "setting_off")];
-        for (var _i = 0; _i < 4; _i++) {
-            var _r = _l.options[_i]; JEI_Box(_s, _r, false, _z);
-            JEI_Label(_r[0] + 14 * _z, (_r[1] + _r[3]) / 2, JEI_Text(_names[_i]), 1.9 * _z, 4, _cream);
-            JEI_Label(_r[2] - 14 * _z, (_r[1] + _r[3]) / 2, _values[_i], 1.9 * _z, 6, _cream);
-        }
-        JEI_Box(_s, _l.developer, _s.developer, _z);
-        var _dev = JEI_Text("developer");
-        var _split = JEI_Locale() == 0 ? 43 : 22;
-        JEI_Label(_x + 34 * _z, _y + 394 * _z, string_copy(_dev, 1, _split), 1.7 * _z, 4, _cream);
-        JEI_Label(_x + 34 * _z, _y + 428 * _z, string_copy(_dev, _split + 1, 120), 1.7 * _z, 4, _cream);
-        JEI_Label(_x + 726 * _z, _y + 414 * _z, JEI_Text(_s.developer ? "setting_on" : "setting_off"), 1.9 * _z, 6, _cream);
-        JEI_Box(_s, _l.reset, false, _z);
-        JEI_Label(_x + 380 * _z, _y + 529 * _z, JEI_Text("reset"), 1.9 * _z, 5, _cream);
-    } else if (_s.configTab == 1) {
-        var _names = JEI_BindingNames();
-        for (var _i = 0; _i < array_length(_names); _i++) {
-            var _n = _names[_i]; var _r = _l.bindings[_i]; JEI_Box(_s, _r, _s.binding == _n, _z);
-            JEI_Label(_r[0] + 14 * _z, (_r[1] + _r[3]) / 2, JEI_Text("bind_" + _n), 1.65 * _z, 4, _cream);
-            var _value = _s.binding == _n ? "..." : JEI_BindingText(variable_struct_get(_s.settings.bindings, _n));
-            JEI_Label(_r[2] - 14 * _z, (_r[1] + _r[3]) / 2, _value, 1.65 * _z, 6, _cream);
-        }
-        var _tip = _s.bindingNotice != "" ? _s.bindingNotice : (_s.binding != "" ? "press_key" : "bind_tip");
-        JEI_Label(_x + 380 * _z, _y + 536 * _z, JEI_Text(_tip), 1.65 * _z, 5, _cream);
-    } else {
-        var _help = ["search_tip", "search_caret", "search_names"];
-        if (_s.pinyinEnabled) array_push(_help, "search_pinyin");
-        _help = array_concat(_help, ["search_or", "search_not", "search_quote", "search_mod", "search_tags", "search_tooltip", "search_category"]);
-        if (_s.developer) array_push(_help, "search_id");
-        var _spacing = _s.developer ? 36 : 40;
-        for (var _i = 0; _i < array_length(_help); _i++) JEI_Label(_x + 30 * _z, _y + (132 + _i * _spacing) * _z, JEI_Text(_help[_i]), 1.6 * _z, 4, _cream);
+        JEI_ConfigRow(_s, _l.options[0], _z, JEI_Text("auto_pause_short"), JEI_Text(_s.settings.autoPause ? "setting_on" : "setting_off"), JEI_Text("singleplayer_only"));
+        JEI_ConfigRow(_s, _l.tabs[1], _z, JEI_Text("shortcuts"), JEI_Text("expand"));
+        JEI_ConfigRow(_s, _l.developer, _z, JEI_Text("developer_short"), JEI_Text(_s.developer ? "setting_on" : "setting_off"), JEI_Text("developer_note"));
+        return;
     }
+    JEI_ConfigRow(_s, _l.tabs[0], _z, JEI_Text("shortcuts"), JEI_Text("collapse"));
+    var _names = JEI_BindingNames();
+    for (var _i = 0; _i < array_length(_names); _i++) {
+        var _n = _names[_i]; var _b = variable_struct_get(_s.settings.bindings, _n);
+        JEI_ConfigRow(_s, _l.bindings[_i], _z, JEI_Text("bind_" + _n), _s.binding == _n ? "..." : JEI_BindingText(_b));
+    }
+    var _tip = _s.bindingNotice != "" ? _s.bindingNotice : (_s.binding != "" ? "press_key" : "bind_tip");
+    JEI_Label(_x + 325 * _z, _y + 418 * _z, JEI_Text(_tip), 1.5 * _z, 5, _ink);
 }
 
 function JEI_TooltipLayout(_s, _l) {
@@ -508,8 +580,19 @@ function JEI_Draw(_s, _gw = -1, _gh = -1) {
     var _l = JEI_Layout(_s, _gw, _gh);
     var _cream = make_color_rgb(255, 235, 205); var _muted = make_color_rgb(214, 184, 157);
     JEI_DrawCatalog(_s, _l, _cream, _muted);
-    if (_s.configOpen) JEI_DrawConfig(_s, _l, _cream, _muted);
-    else if (_s.detailOpen) JEI_DrawRecipe(_s, _l, _cream, _muted);
+    var _ink = make_color_rgb(68, 39, 39);
+    var _brown = make_color_rgb(110, 70, 53);
+    if (_s.configOpen) JEI_DrawConfig(_s, _l, _ink, _brown);
+    else if (_s.detailOpen) JEI_DrawRecipe(_s, _l, _ink, _brown);
+    if (variable_struct_exists(_l, "hoverSource") && _s.hover < 0) {
+        var _source = _l.hoverSource;
+        var _name = JEI_FitWidth(_source.name, 1.65 * _l.z, 380 * _l.z);
+        var _tx = clamp(_s.pointerX + 18 * _l.z, 4 * _l.z, _gw - 412 * _l.z);
+        var _ty = clamp(_s.pointerY + 14 * _l.z, 4 * _l.z, _gh - 64 * _l.z);
+        JEI_Fill(JEI_Rect(_tx, _ty, 400 * _l.z, 54 * _l.z), make_color_rgb(30, 23, 32));
+        JEI_Label(_tx + 9 * _l.z, _ty + 15 * _l.z, _name, 1.65 * _l.z, 4, _cream);
+        JEI_Label(_tx + 9 * _l.z, _ty + 39 * _l.z, JEI_Text(_source.kind), 1.4 * _l.z, 4, _muted);
+    }
     if (!_s.configOpen) JEI_DrawTooltip(_s, _l, _cream, _muted);
     draw_set_alpha(1); draw_set_color(c_white);
 }
