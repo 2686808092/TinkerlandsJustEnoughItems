@@ -8,6 +8,7 @@
 - Settings now show auto-pause, key bindings, and developer mode. Crafting quantities follow ingredient names, and transmutation results show their names on hover.
 - The catalog deduplicates native IDs, marks recipe blueprints with a scroll, and hides explicitly labeled work-in-progress items from the regular list. Duplicate sources for the same chest type are merged.
 - Borderless window preparation for input methods now happens during startup, avoiding a window mode change on the first inventory opening.
+- Finished the frame edges and removed heavy outlines from labels on light panels. Long English titles and ingredient names wrap onto additional lines.
 
 ## 1.6.0
 

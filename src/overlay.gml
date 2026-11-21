@@ -98,16 +98,16 @@ function JEI_Layout(_s, _gw, _gh) {
         _s.detailPage = clamp(_s.detailPage, 0, _l.detailPages - 1);
         var _visible = min(6, array_length(_groups) - _s.detailPage * 6);
         var _cols = min(3, max(1, _visible));
-        _materialStart = _px + (190 - ((_cols - 1) * 96 + 68) / 2) * _z;
-        _materialEnd = _px + (190 + ((_cols - 1) * 96 + 68) / 2) * _z;
+        _materialStart = _px + (190 - ((_cols - 1) * 124 + 68) / 2) * _z;
+        _materialEnd = _px + (190 + ((_cols - 1) * 124 + 68) / 2) * _z;
         if (_l.detailPages > 1) _flowY -= 14 * _z;
         for (var _i = 0; _i < _visible; _i++) {
             var _g = _groups[_s.detailPage * 6 + _i];
             var _alt = floor(get_timer() / 1500000) mod max(1, array_length(_g.ids));
             var _rowCols = min(3, _visible - floor(_i / 3) * 3);
-            var _left = 190 - ((_rowCols - 1) * 96 + 68) / 2;
+            var _left = 190 - ((_rowCols - 1) * 124 + 68) / 2;
             var _rowY = _flowY + (_visible <= 3 ? 0 : -55 + floor(_i / 3) * 110) * _z;
-            array_push(_l.materialSlots, {rect: JEI_Rect(_px + (_left + (_i mod 3) * 96) * _z, _rowY - 34 * _z, 68 * _z, 68 * _z),
+            array_push(_l.materialSlots, {rect: JEI_Rect(_px + (_left + (_i mod 3) * 124) * _z, _rowY - 34 * _z, 68 * _z, 68 * _z),
                 id: _g.ids[_alt], amount: _g.amount, alternatives: array_length(_g.ids)});
         }
         _l.materialPrevious = JEI_Rect(_px + 30 * _z, _py + 370 * _z, 28 * _z, 24 * _z);
@@ -345,6 +345,29 @@ function JEI_SearchField(_s, _l) {
     return _cache;
 }
 
+function JEI_PanelLabel(_x, _y, _text, _scale, _align = 4, _color = c_white) {
+    var _a = JEI_Runtime(); var _draw = _a.panelText; var _alignText = _a.textAlign;
+    var _border = {width:0, alpha:0, color:c_black};
+    var _shadow = {offset:0, alpha:0, color:c_black};
+    if (is_undefined(_draw) || is_undefined(_alignText)) {
+        JEI_Label(_x, _y, _text, _scale, _align, _color);
+        return;
+    }
+    _alignText(_align);
+    _draw(round(_x), round(_y), _text, _color, 1, _scale, _border, _shadow);
+}
+
+function JEI_PanelText(_x, _y, _text, _scale, _width, _limit, _align, _color) {
+    var _lines = JEI_WrapText(_text, _scale, _width);
+    var _count = min(array_length(_lines), _limit);
+    var _step = 10 * _scale;
+    for (var _i = 0; _i < _count; _i++) {
+        var _line = _lines[_i];
+        if (_i + 1 == _count && _count < array_length(_lines)) _line = JEI_FitWidth(_line + "..", _scale, _width);
+        JEI_PanelLabel(_x, _y + _i * _step, _line, _scale, _align, _color);
+    }
+}
+
 function JEI_DrawSlot(_s, _entry, _z, _ink, _cube = false, _label = true) {
     var _r = _entry.rect;
     var _sprite = asset_get_index(_cube ? "sprGUIIngameEquipmentSlotCube" : "sprGUIIngameInventorySlot");
@@ -356,13 +379,12 @@ function JEI_DrawSlot(_s, _entry, _z, _ink, _cube = false, _label = true) {
     JEI_Icon(_entry.id, _cx, _cy - (_cube ? 5 * _z : 0), (_cube ? 35 : 54) * _z);
     var _count = _entry.amount > 1 ? string(_entry.amount) : "";
     if (_count != "" && _cube) {
-        JEI_Label(_r[2] - 4 * _z, _r[3] - 8 * _z, _count, 1.3 * _z, 6, c_white);
+        JEI_PanelLabel(_r[2] - 4 * _z, _r[3] - 8 * _z, _count, 1.3 * _z, 6, c_white);
     }
     if (_label) {
         var _scale = 1.65 * _z * _s.settings.font;
         var _suffix = _count == "" ? "" : (JEI_Locale() == 1 ? " ×" : " x") + _count;
-        var _fit = JEI_FitWidth(JEI_Name(_entry.id), _scale, 94 * _z - JEI_TextWidth(_suffix, _scale));
-        JEI_Label(_cx, _r[3] + 14 * _z, _fit + _suffix, _scale, 5, _ink);
+        JEI_PanelText(_cx, _r[3] + 12 * _z, JEI_Name(_entry.id) + _suffix, _scale, 120 * _z, 3, 5, _ink);
     }
 }
 
@@ -377,19 +399,47 @@ function JEI_DrawPopupFrame(_s, _l, _title, _item = -1) {
     var _r = _l.popup; var _z = _l.z; var _border = max(4, round(17 * _z));
     var _left = round(_r[0]); var _top = round(_r[1]);
     var _right = round(_r[2]); var _bottom = round(_r[3]);
+    var _wood = make_color_rgb(125, 64, 57);
+    var _rim = make_color_rgb(42, 22, 34);
+    var _edge = max(1, round(2 * _z));
+    var _hi = make_color_rgb(173, 109, 67);
     JEI_Fill([_left + _border - 1, _top + _border - 1, _right - _border, _bottom - _border], make_color_rgb(215, 179, 142));
+    JEI_Fill([_left, _top + _border, _left + _border, _bottom - _border], _wood);
+    JEI_Fill([_right - _border, _top + _border, _right - 1, _bottom - _border], _wood);
+    JEI_Fill([_left + _border, _top, _right - _border, _top + _border], _wood);
+    JEI_Fill([_left + _border, _bottom - _border, _right - _border, _bottom - 1], _wood);
+    JEI_Fill([_left, _top + _border, _left + _edge, _bottom - _border], _rim);
+    JEI_Fill([_right - _edge - 1, _top + _border, _right - 1, _bottom - _border], _rim);
+    JEI_Fill([_left + _border, _top, _right - _border, _top + _edge], _rim);
+    JEI_Fill([_left + _border, _bottom - _edge - 1, _right - _border, _bottom - 1], _rim);
+    JEI_Fill([_left + _edge * 2, _top + _border, _left + _edge * 3, _bottom - _border], _hi);
+    JEI_Fill([_right - _edge * 3, _top + _border, _right - _edge * 2, _bottom - _border], _hi);
+    JEI_Fill([_left + _border, _top + _edge * 2, _right - _border, _top + _edge * 3], _hi);
+    JEI_Fill([_left + _border, _bottom - _edge * 3, _right - _border, _bottom - _edge * 2], _hi);
+    var _xs = [_left, _right - _border];
+    var _ys = [_top, _bottom - _border];
+    for (var _cx = 0; _cx < 2; _cx++) for (var _cy = 0; _cy < 2; _cy++) {
+        var _xx = _xs[_cx]; var _yy = _ys[_cy];
+        var _outerX = _cx == 0 ? _xx : _xx + _border - _edge;
+        var _outerY = _cy == 0 ? _yy : _yy + _border - _edge;
+        JEI_Fill([_xx, _yy, _xx + _border - 1, _yy + _border - 1], _wood);
+        JEI_Fill([_outerX, _yy, _outerX + _edge - 1, _yy + _border - 1], _rim);
+        JEI_Fill([_xx, _outerY, _xx + _border - 1, _outerY + _edge - 1], _rim);
+        var _gold = make_color_rgb(226, 167, 92);
+        var _highX = _cx == 0 ? _xx + _edge * 2 : _xx + _border - _edge * 3;
+        var _highY = _cy == 0 ? _yy + _edge * 2 : _yy + _border - _edge * 3;
+        JEI_Fill([_highX, _yy + _edge, _highX + _edge, _yy + _border - _edge], _gold);
+        JEI_Fill([_xx + _edge, _highY, _xx + _border - _edge, _highY + _edge], _gold);
+    }
     var _sprite = asset_get_index("sprGUIIngameEquipmentContainer");
     if (sprite_exists(_sprite)) {
-        var _w = sprite_get_width(_sprite); var _h = sprite_get_height(_sprite);
-        var _sx = [0, 9, _w - 9, _w]; var _sy = [0, 9, _h - 9, _h];
-        var _dx = [_left, _left + _border, _right - _border, _right];
-        var _dy = [_top, _top + _border, _bottom - _border, _bottom];
-        for (var _x = 0; _x < 3; _x++) for (var _y = 0; _y < 3; _y++) {
-            if (_x == 1 && _y == 1) continue;
-            var _sw = _sx[_x + 1] - _sx[_x]; var _sh = _sy[_y + 1] - _sy[_y];
-            draw_sprite_part_ext(_sprite, 0, _sx[_x], _sy[_y], _sw, _sh, _dx[_x], _dy[_y],
-                (_dx[_x + 1] - _dx[_x]) / _sw, (_dy[_y + 1] - _dy[_y]) / _sh, c_white, 1);
-        }
+        var _sw = sprite_get_width(_sprite) - 9;
+        var _sh = sprite_get_height(_sprite) - 9;
+        var _scaleBorder = _border / 9;
+        draw_sprite_part_ext(_sprite, 0, 0, 0, 9, 9, _left, _top, _scaleBorder, _scaleBorder, c_white, 1);
+        draw_sprite_part_ext(_sprite, 0, _sw, 0, 9, 9, _right - _border, _top, _scaleBorder, _scaleBorder, c_white, 1);
+        draw_sprite_part_ext(_sprite, 0, 0, _sh, 9, 9, _left, _bottom - _border, _scaleBorder, _scaleBorder, c_white, 1);
+        draw_sprite_part_ext(_sprite, 0, _sw, _sh, 9, 9, _right - _border, _bottom - _border, _scaleBorder, _scaleBorder, c_white, 1);
     }
     var _ink = make_color_rgb(68, 39, 39);
     var _titleX = _left + 26 * _z;
@@ -398,16 +448,18 @@ function JEI_DrawPopupFrame(_s, _l, _title, _item = -1) {
         _titleX += 46 * _z;
     }
     var _scale = 2.2 * _z * _s.settings.font;
-    var _fit = JEI_FitWidth(_title, _scale, _r[2] - _titleX - 61 * _z);
-    JEI_Label(_titleX, _top + (_item >= 0 ? 36 : 45) * _z, _fit, _scale, 4, _ink);
+    var _titleWidth = _r[2] - _titleX - 61 * _z;
+    var _twoLines = _item >= 0 && JEI_TextWidth(_title, _scale) > _titleWidth;
+    JEI_PanelText(_titleX, _top + (_item < 0 ? 45 : (_twoLines ? 28 : 36)) * _z,
+        _title, _scale, _titleWidth, _item >= 0 ? 2 : 1, 4, _ink);
     if (_item >= 0) {
         var _doc = variable_struct_get(_s.searchDocs, string(_item));
         var _origin = is_struct(_doc) ? _doc.origin : "Tinkerlands";
-        JEI_Label(_titleX, _top + 61 * _z, _origin, 1.5 * _z, 4, _ink);
+        JEI_PanelLabel(_titleX, _top + (_twoLines ? 70 : 61) * _z, _origin, 1.5 * _z, 4, _ink);
     }
     JEI_Fill(JEI_Rect(_left + 24 * _z, _top + 79 * _z, _right - _left - 48 * _z, max(1, _z)), make_color_rgb(160, 112, 90));
     JEI_Fill(_l.close, make_color_rgb(111, 67, 53));
-    JEI_Label((_l.close[0] + _l.close[2]) / 2, (_l.close[1] + _l.close[3]) / 2, "X", 1.8 * _z, 5, c_white);
+    JEI_PanelLabel((_l.close[0] + _l.close[2]) / 2, (_l.close[1] + _l.close[3]) / 2, "X", 1.8 * _z, 5, c_white);
 }
 
 function JEI_StationItem(_recipe) {
@@ -431,38 +483,40 @@ function JEI_DrawRecipe(_s, _l, _ink, _muted) {
         if (_station >= 0) JEI_Icon(_station, _x + 39 * _z, _y + 103 * _z, 26 * _z);
         var _size = 1.8 * _z * _s.settings.font;
         var _fit = JEI_FitWidth(_label, _size, 427 * _z);
-        JEI_Label(_x + 60 * _z, _y + 103 * _z, _fit, _size, 4, _ink);
+        JEI_PanelLabel(_x + 60 * _z, _y + 103 * _z, _fit, _size, 4, _ink);
     } else {
         var _count = _uses ? 0 : array_length(JEI_Acquisitions(_s, _s.selected));
         if (_count > 0) {
             var _label = JEI_Text("acquisition") + " (" + string(_count) + ")";
-            JEI_Label(_x + 25 * _z, _y + 103 * _z, _label, 1.8 * _z, 4, _ink);
+            JEI_PanelLabel(_x + 25 * _z, _y + 103 * _z, _label, 1.8 * _z, 4, _ink);
         }
     }
     var _page = _has ? _s.variant : _s.detailPage;
     var _pages = _has ? _l.variants : _l.detailPages;
     if (_pages > 1) {
         var _pageText = string(_page + 1) + " / " + string(_pages);
-        JEI_Label(_x + 564 * _z, _y + 103 * _z, _pageText, 1.5 * _z, 5, _ink);
+        JEI_PanelLabel(_x + 564 * _z, _y + 103 * _z, _pageText, 1.5 * _z, 5, _ink);
         JEI_Arrow(_l.recipePrevious, -1, _page > 0, _s, _z);
         JEI_Arrow(_l.recipeNext, 1, _page + 1 < _pages, _s, _z);
     }
     if (!_has) {
-        if (!_uses && !_s.acquisitionsReady && array_length(_l.sourceSlots) == 0) JEI_Label(_x + 325 * _z, _y + 220 * _z, JEI_Text("loading"), 1.8 * _z, 5, _muted);
+        if (!_uses && !_s.acquisitionsReady && array_length(_l.sourceSlots) == 0) JEI_PanelLabel(_x + 325 * _z, _y + 220 * _z, JEI_Text("loading"), 1.8 * _z, 5, _muted);
         for (var _i = 0; _i < array_length(_l.sourceGroups); _i++) {
             var _group = _l.sourceGroups[_i]; var _gr = _group.rect;
             var _arrow = asset_get_index(_group.collapsed ? "sprGUIIngameArrowRight" : "sprGUIIngameArrowDown");
             JEI_Fill(_gr, make_color_rgb(192, 150, 117), JEI_Hit(_gr, _s.pointerX, _s.pointerY) ? 0.8 : 0.44);
             JEI_SpriteIcon(_arrow, _gr[0] + 16 * _z, _gr[1] + 24 * _z, 15 * _z);
-            JEI_Label(_gr[0] + 33 * _z, _gr[1] + 24 * _z, JEI_Text(_group.kind), 1.65 * _z, 4, _ink);
-            JEI_Label(_gr[2] - 12 * _z, _gr[1] + 24 * _z, string(_group.count), 1.5 * _z, 6, _ink);
+            JEI_PanelLabel(_gr[0] + 33 * _z, _gr[1] + 24 * _z, JEI_Text(_group.kind), 1.65 * _z, 4, _ink);
+            JEI_PanelLabel(_gr[2] - 12 * _z, _gr[1] + 24 * _z, string(_group.count), 1.5 * _z, 6, _ink);
         }
         for (var _i = 0; _i < array_length(_l.sourceSlots); _i++) {
             var _entry = _l.sourceSlots[_i]; var _source = _entry.source; var _sr = _entry.rect;
             JEI_Fill(JEI_Rect(_sr[0], _sr[3] - _z, _sr[2] - _sr[0], max(1, _z)), make_color_rgb(174, 130, 104));
             JEI_SpriteIcon(_source.sprite, _sr[0] + 22 * _z, _sr[1] + 25 * _z, 34 * _z);
-            JEI_Label(_sr[0] + 52 * _z, _sr[1] + 12 * _z, JEI_Text(_source.kind), 1.35 * _z * _s.settings.font, 4, _muted);
-            JEI_Label(_sr[0] + 52 * _z, _sr[1] + 34 * _z, JEI_Fit(_source.name, JEI_Locale() == 0 ? 44 : 26), 1.7 * _z * _s.settings.font, 4, _ink);
+            var _sourceScale = 1.7 * _z * _s.settings.font;
+            var _sourceWidth = _sr[2] - _sr[0] - 64 * _z;
+            var _sourceY = JEI_TextWidth(_source.name, _sourceScale) > _sourceWidth ? 15 : 25;
+            JEI_PanelText(_sr[0] + 52 * _z, _sr[1] + _sourceY * _z, _source.name, _sourceScale, _sourceWidth, 2, 4, _ink);
             if (JEI_Hit(_sr, _s.pointerX, _s.pointerY)) _l.hoverSource = _source;
         }
         return;
@@ -480,13 +534,13 @@ function JEI_DrawRecipe(_s, _l, _ink, _muted) {
         JEI_SpriteIcon(_arrow, _l.arrowX, _l.flowY, 26 * _z);
     }
     JEI_DrawSlot(_s, {rect: _l.outputSlot, id: _l.outputItem, amount: _l.outputAmount}, _z, _ink, false, !_cube);
-    if (_cube && _l.outputAmount > 1) JEI_Label(_l.outputSlot[2] - 4 * _z, _l.outputSlot[3] - 8 * _z, string(_l.outputAmount), 1.3 * _z, 6, _ink);
+    if (_cube && _l.outputAmount > 1) JEI_PanelLabel(_l.outputSlot[2] - 4 * _z, _l.outputSlot[3] - 8 * _z, string(_l.outputAmount), 1.3 * _z, 6, _ink);
     if (_l.detailPages > 1) {
         JEI_Arrow(_l.materialPrevious, -1, _s.detailPage > 0, _s, _z);
         JEI_Arrow(_l.materialNext, 1, _s.detailPage + 1 < _l.detailPages, _s, _z);
-        JEI_Label(_x + 190 * _z, _y + 382 * _z, string(_s.detailPage + 1) + " / " + string(_l.detailPages), 1.4 * _z, 5, _ink);
+        JEI_PanelLabel(_x + 190 * _z, _y + 382 * _z, string(_s.detailPage + 1) + " / " + string(_l.detailPages), 1.4 * _z, 5, _ink);
     }
-    if (_l.transfer[2] > 0) { JEI_Box(_s, _l.transfer, false, _z); JEI_Label((_l.transfer[0] + _l.transfer[2]) / 2, (_l.transfer[1] + _l.transfer[3]) / 2, "+", 1.8 * _z, 5); }
+    if (_l.transfer[2] > 0) { JEI_Box(_s, _l.transfer, false, _z); JEI_PanelLabel((_l.transfer[0] + _l.transfer[2]) / 2, (_l.transfer[1] + _l.transfer[3]) / 2, "+", 1.8 * _z, 5); }
 }
 
 function JEI_ConfigRow(_s, _r, _z, _name, _value, _note = "") {
@@ -495,11 +549,11 @@ function JEI_ConfigRow(_s, _r, _z, _name, _value, _note = "") {
     JEI_Fill(JEI_Rect(_r[0], _r[3] - _z, _r[2] - _r[0], max(1, _z)), make_color_rgb(174, 130, 104));
     var _button = JEI_Rect(_r[2] - 77 * _z, _mid - 15 * _z, 75 * _z, 30 * _z);
     JEI_Fill(_button, make_color_rgb(111, 67, 53));
-    JEI_Label(_r[0] + 4 * _z, _mid - (_note == "" ? 0 : 9 * _z), _name, 1.8 * _z, 4, _ink);
+    JEI_PanelLabel(_r[0] + 4 * _z, _mid - (_note == "" ? 0 : 9 * _z), _name, 1.8 * _z, 4, _ink);
     var _noteFit = JEI_FitWidth(_note, 1.33 * _z, 504 * _z);
-    if (_noteFit != "") JEI_Label(_r[0] + 4 * _z, _mid + 13 * _z, _noteFit, 1.33 * _z, 4, _ink);
+    if (_noteFit != "") JEI_PanelLabel(_r[0] + 4 * _z, _mid + 13 * _z, _noteFit, 1.33 * _z, 4, _ink);
     var _scale = min(1.5 * _z, 69 * _z / max(1, JEI_TextWidth(_value, 1)));
-    JEI_Label(_r[2] - 39 * _z, _mid, _value, _scale, 5, c_white);
+    JEI_PanelLabel(_r[2] - 39 * _z, _mid, _value, _scale, 5, c_white);
 }
 
 function JEI_DrawConfig(_s, _l, _ink, _muted) {
@@ -518,7 +572,7 @@ function JEI_DrawConfig(_s, _l, _ink, _muted) {
         JEI_ConfigRow(_s, _l.bindings[_i], _z, JEI_Text("bind_" + _n), _s.binding == _n ? "..." : JEI_BindingText(_b));
     }
     var _tip = _s.bindingNotice != "" ? _s.bindingNotice : (_s.binding != "" ? "press_key" : "bind_tip");
-    JEI_Label(_x + 325 * _z, _y + 418 * _z, JEI_Text(_tip), 1.5 * _z, 5, _ink);
+    JEI_PanelLabel(_x + 325 * _z, _y + 418 * _z, JEI_Text(_tip), 1.5 * _z, 5, _ink);
 }
 
 function JEI_TooltipLayout(_s, _l) {

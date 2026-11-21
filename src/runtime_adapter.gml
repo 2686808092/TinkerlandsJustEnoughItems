@@ -14,7 +14,8 @@ function JEI_Runtime() {
             pause: JEI_NativeFunction("instance_pause_all"),
             hover: JEI_NativeFunction("container_get_global_hover_item"),
             language: JEI_NativeFunction("lang"), textWidth: JEI_NativeFunction("string_width_scribble"),
-            textScale: JEI_NativeFunction("draw_get_text_scale")});
+            textScale: JEI_NativeFunction("draw_get_text_scale"),
+            panelText: JEI_NativeFunction("draw_text_gui_n"), textAlign: JEI_NativeFunction("draw_set_align")});
     }
     return variable_global_get("__JEI_Runtime");
 }
