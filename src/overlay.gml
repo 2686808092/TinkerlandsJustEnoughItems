@@ -354,7 +354,9 @@ function JEI_PanelLabel(_x, _y, _text, _scale, _align = 4, _color = c_white) {
         return;
     }
     _alignText(_align);
-    _draw(round(_x), round(_y), _text, _color, 1, _scale, _border, _shadow);
+    var _fonts = variable_global_get("__FONTS");
+    var _font = _fonts.normalString;
+    _draw(round(_x), round(_y), _text, _color, 1, _scale, _border, _shadow, _font);
 }
 
 function JEI_PanelText(_x, _y, _text, _scale, _width, _limit, _align, _color) {
@@ -382,7 +384,7 @@ function JEI_DrawSlot(_s, _entry, _z, _ink, _cube = false, _label = true) {
         JEI_PanelLabel(_r[2] - 4 * _z, _r[3] - 8 * _z, _count, 1.3 * _z, 6, c_white);
     }
     if (_label) {
-        var _scale = 1.65 * _z * _s.settings.font;
+        var _scale = 1.56 * _z * _s.settings.font;
         var _suffix = _count == "" ? "" : (JEI_Locale() == 1 ? " ×" : " x") + _count;
         JEI_PanelText(_cx, _r[3] + 12 * _z, JEI_Name(_entry.id) + _suffix, _scale, 120 * _z, 3, 5, _ink);
     }
@@ -399,47 +401,29 @@ function JEI_DrawPopupFrame(_s, _l, _title, _item = -1) {
     var _r = _l.popup; var _z = _l.z; var _border = max(4, round(17 * _z));
     var _left = round(_r[0]); var _top = round(_r[1]);
     var _right = round(_r[2]); var _bottom = round(_r[3]);
-    var _wood = make_color_rgb(125, 64, 57);
-    var _rim = make_color_rgb(42, 22, 34);
-    var _edge = max(1, round(2 * _z));
-    var _hi = make_color_rgb(173, 109, 67);
-    JEI_Fill([_left + _border - 1, _top + _border - 1, _right - _border, _bottom - _border], make_color_rgb(215, 179, 142));
-    JEI_Fill([_left, _top + _border, _left + _border, _bottom - _border], _wood);
-    JEI_Fill([_right - _border, _top + _border, _right - 1, _bottom - _border], _wood);
-    JEI_Fill([_left + _border, _top, _right - _border, _top + _border], _wood);
-    JEI_Fill([_left + _border, _bottom - _border, _right - _border, _bottom - 1], _wood);
-    JEI_Fill([_left, _top + _border, _left + _edge, _bottom - _border], _rim);
-    JEI_Fill([_right - _edge - 1, _top + _border, _right - 1, _bottom - _border], _rim);
-    JEI_Fill([_left + _border, _top, _right - _border, _top + _edge], _rim);
-    JEI_Fill([_left + _border, _bottom - _edge - 1, _right - _border, _bottom - 1], _rim);
-    JEI_Fill([_left + _edge * 2, _top + _border, _left + _edge * 3, _bottom - _border], _hi);
-    JEI_Fill([_right - _edge * 3, _top + _border, _right - _edge * 2, _bottom - _border], _hi);
-    JEI_Fill([_left + _border, _top + _edge * 2, _right - _border, _top + _edge * 3], _hi);
-    JEI_Fill([_left + _border, _bottom - _edge * 3, _right - _border, _bottom - _edge * 2], _hi);
-    var _xs = [_left, _right - _border];
-    var _ys = [_top, _bottom - _border];
-    for (var _cx = 0; _cx < 2; _cx++) for (var _cy = 0; _cy < 2; _cy++) {
-        var _xx = _xs[_cx]; var _yy = _ys[_cy];
-        var _outerX = _cx == 0 ? _xx : _xx + _border - _edge;
-        var _outerY = _cy == 0 ? _yy : _yy + _border - _edge;
-        JEI_Fill([_xx, _yy, _xx + _border - 1, _yy + _border - 1], _wood);
-        JEI_Fill([_outerX, _yy, _outerX + _edge - 1, _yy + _border - 1], _rim);
-        JEI_Fill([_xx, _outerY, _xx + _border - 1, _outerY + _edge - 1], _rim);
-        var _gold = make_color_rgb(226, 167, 92);
-        var _highX = _cx == 0 ? _xx + _edge * 2 : _xx + _border - _edge * 3;
-        var _highY = _cy == 0 ? _yy + _edge * 2 : _yy + _border - _edge * 3;
-        JEI_Fill([_highX, _yy + _edge, _highX + _edge, _yy + _border - _edge], _gold);
-        JEI_Fill([_xx + _edge, _highY, _xx + _border - _edge, _highY + _edge], _gold);
-    }
     var _sprite = asset_get_index("sprGUIIngameEquipmentContainer");
     if (sprite_exists(_sprite)) {
-        var _sw = sprite_get_width(_sprite) - 9;
-        var _sh = sprite_get_height(_sprite) - 9;
-        var _scaleBorder = _border / 9;
-        draw_sprite_part_ext(_sprite, 0, 0, 0, 9, 9, _left, _top, _scaleBorder, _scaleBorder, c_white, 1);
-        draw_sprite_part_ext(_sprite, 0, _sw, 0, 9, 9, _right - _border, _top, _scaleBorder, _scaleBorder, c_white, 1);
-        draw_sprite_part_ext(_sprite, 0, 0, _sh, 9, 9, _left, _bottom - _border, _scaleBorder, _scaleBorder, c_white, 1);
-        draw_sprite_part_ext(_sprite, 0, _sw, _sh, 9, 9, _right - _border, _bottom - _border, _scaleBorder, _scaleBorder, c_white, 1);
+        // The native sprite is 200 pixels tall, but only rows 0..144 are in the texture.
+        // Reading beyond the artwork clips stretched sides and drops the lower slices.
+        var _sourceW = sprite_get_width(_sprite);
+        var _sourceH = min(145, sprite_get_height(_sprite));
+        var _sx = [0, 9, _sourceW - 9, _sourceW];
+        var _sy = [0, 9, _sourceH - 9, _sourceH];
+        var _dx = [_left, _left + _border, _right - _border, _right];
+        var _dy = [_top, _top + _border, _bottom - _border, _bottom];
+        JEI_Fill([_dx[1] - 1, _dy[1] - 1, _dx[2], _dy[2]], make_color_rgb(215, 179, 142));
+        for (var _column = 0; _column < 3; _column++) for (var _row = 0; _row < 3; _row++) {
+            if (_column == 1 && _row == 1) continue;
+            var _srcX = _sx[_column]; var _srcY = _sy[_row];
+            var _srcW = _sx[_column + 1] - _srcX; var _srcH = _sy[_row + 1] - _srcY;
+            var _dstX = _dx[_column]; var _dstY = _dy[_row];
+            var _scaleX = (_dx[_column + 1] - _dstX) / _srcW;
+            var _scaleY = (_dy[_row + 1] - _dstY) / _srcH;
+            draw_sprite_part_ext(_sprite, 0, _srcX, _srcY, _srcW, _srcH, _dstX, _dstY, _scaleX, _scaleY, c_white, 1);
+        }
+    } else {
+        JEI_Fill([_left, _top, _right - 1, _bottom - 1], make_color_rgb(125, 64, 57));
+        JEI_Fill([_left + _border, _top + _border, _right - _border, _bottom - _border], make_color_rgb(215, 179, 142));
     }
     var _ink = make_color_rgb(68, 39, 39);
     var _titleX = _left + 26 * _z;
@@ -447,7 +431,7 @@ function JEI_DrawPopupFrame(_s, _l, _title, _item = -1) {
         JEI_Icon(_item, _left + 44 * _z, _top + 46 * _z, 38 * _z);
         _titleX += 46 * _z;
     }
-    var _scale = 2.2 * _z * _s.settings.font;
+    var _scale = 1.95 * _z * _s.settings.font;
     var _titleWidth = _r[2] - _titleX - 61 * _z;
     var _twoLines = _item >= 0 && JEI_TextWidth(_title, _scale) > _titleWidth;
     JEI_PanelText(_titleX, _top + (_item < 0 ? 45 : (_twoLines ? 28 : 36)) * _z,
@@ -481,7 +465,7 @@ function JEI_DrawRecipe(_s, _l, _ink, _muted) {
         var _label = JEI_StationName(_r);
         if (_uses) _label = JEI_Text("uses") + " · " + _label;
         if (_station >= 0) JEI_Icon(_station, _x + 39 * _z, _y + 103 * _z, 26 * _z);
-        var _size = 1.8 * _z * _s.settings.font;
+        var _size = 1.64 * _z * _s.settings.font;
         var _fit = JEI_FitWidth(_label, _size, 427 * _z);
         JEI_PanelLabel(_x + 60 * _z, _y + 103 * _z, _fit, _size, 4, _ink);
     } else {
