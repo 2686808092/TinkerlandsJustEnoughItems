@@ -6,7 +6,7 @@ Tinkerlands のインベントリ画面で、アイテム、レシピ、用途�
 
 ## インストール
 
-[GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) から `Just_Enough_Items_1.7.2.zip` をダウンロードし、展開せずにゲームの `mods` フォルダーに入れて、ゲームを起動し直してください。更新時は古い JEI の ZIP を取り除いてください。
+[GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) から `Just_Enough_Items_1.7.3.zip` をダウンロードし、展開せずにゲームの `mods` フォルダーに入れて、ゲームを起動し直してください。更新時は古い JEI の ZIP を取り除いてください。
 
 Mod の画面表示は簡体字中国語と英語に対応しています。アイテム名と作業台名はゲームの言語設定に従います。
 

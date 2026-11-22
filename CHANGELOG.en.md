@@ -2,6 +2,12 @@
 
 [简体中文](CHANGELOG.md) · [English README](docs/readme/README.en.md)
 
+## 1.7.3
+
+- Reuse acquisition groups and reduce repeated layout and text measurements to make open detail panels cheaper to draw.
+- With auto-pause turned off, JEI dims the game scene behind the native HUD while the overlay is open. The left column uses the same backing in either mode.
+- Item details and settings use a deeper purple sampled from the cooking panel frame.
+
 ## 1.7.2
 
 - The backing covers the full left column and uses the same color and opacity with auto-pause on or off. The game's health, mana, and stamina indicators draw above it.

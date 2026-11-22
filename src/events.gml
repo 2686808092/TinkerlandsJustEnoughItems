@@ -4,15 +4,21 @@ function JEI_WorldReady() {
 }
 
 function JEI_OtherModalOpen() {
-    var _names = ["objGUIMenuController", "objGUICubeRecipe", "objGUICube", "objGUINPCController",
+    if (!variable_global_exists("__JEI_ModalObjects")) {
+        var _names = ["objGUIMenuController", "objGUICubeRecipe", "objGUICube", "objGUINPCController",
         "objGUINPCGiftController", "objGUINPCStorageController", "objGUIShopController", "objGUICraftingController",
         "objGUICommunityController", "objGUIGuideController", "objGUIBank", "objGUIEnchant",
         "objGUIReforgeController", "objGUIRecyclerController", "objGUIShipNavigationController",
         "objCookingMinigameController", "objFishingMinigameController", "objReportHelper", "objTicketReportTool", "objGUIMapChartController"];
-    for (var _i = 0; _i < array_length(_names); _i++) {
-        var _obj = asset_get_index(_names[_i]);
-        if (_obj != -1 && instance_exists(_obj)) return true;
+        var _ids = [];
+        for (var _i = 0; _i < array_length(_names); _i++) {
+            var _obj = asset_get_index(_names[_i]);
+            if (_obj != -1) array_push(_ids, _obj);
+        }
+        variable_global_set("__JEI_ModalObjects", _ids);
     }
+    var _ids = variable_global_get("__JEI_ModalObjects");
+    for (var _i = 0; _i < array_length(_ids); _i++) if (instance_exists(_ids[_i])) return true;
     return false;
 }
 
@@ -46,9 +52,12 @@ OnModUpdate(function() {
     var _input = JEI_ReadInput(_s);
     var _gw = display_get_gui_width(); var _gh = display_get_gui_height();
     var _l = JEI_Layout(_s, _gw, _gh);
-    if (_inventory) JEI_Keyboard(_s, _input, _l);
+    var _inventoryClose = _s.pauseOwned && variable_global_exists("__K_INVENTORY_PRESSED") && variable_global_get("__K_INVENTORY_PRESSED");
+    if (_inventory && (array_length(_input.pressed) > 0 || _s.searchFocused || _s.binding != "" || _s.configOpen || _inventoryClose)) {
+        JEI_Keyboard(_s, _input, _l);
+        if (_s.open) _l = JEI_Layout(_s, _gw, _gh);
+    }
     if (!_s.open && !_s.captureLeft && !_s.captureRight) { _s.frameCapture = false; JEI_SyncGuard(_s, false); return; }
-    _l = JEI_Layout(_s, _gw, _gh);
     JEI_CaptureGameplay(_s, _input, _l);
     var _action = JEI_Frame(_s, _input, _gw, _gh, _l);
     _s.frameCapture = _input.focused && (_s.frameCapture || _action.capture);

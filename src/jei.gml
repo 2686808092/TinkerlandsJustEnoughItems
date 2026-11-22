@@ -100,6 +100,7 @@ function JEI_Init(_s) {
     _s.settings = JEI_Settings();
     _s.configTab = 0;
     _s.sourceCollapsed = {};
+    _s.sourceEntries = undefined;
     _s.binding = "";
     _s.bindingNotice = "";
     _s.byUses = {};
@@ -274,6 +275,7 @@ function JEI_Recipes(_s, _id) {
 }
 
 function JEI_RecipeRows(_s) {
+    _s.sourceEntries = undefined;
     _s.rows = [];
     _s.cubeGrid = [];
     _s.recipeVisible = 9;

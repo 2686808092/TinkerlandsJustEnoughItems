@@ -6,7 +6,7 @@ Tinkerlands 인벤토리에서 아이템, 제작법, 용도, 획득처를 찾아
 
 ## 설치
 
-[GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest)에서 `Just_Enough_Items_1.7.2.zip`을 내려받아 압축을 풀지 않고 게임의 `mods` 폴더에 넣은 뒤 게임을 다시 실행하세요. 업데이트할 때는 이전 JEI ZIP을 제거하세요.
+[GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest)에서 `Just_Enough_Items_1.7.3.zip`을 내려받아 압축을 풀지 않고 게임의 `mods` 폴더에 넣은 뒤 게임을 다시 실행하세요. 업데이트할 때는 이전 JEI ZIP을 제거하세요.
 
 모드 인터페이스는 중국어 간체와 영어를 제공합니다. 아이템과 제작대 이름은 게임에 설정된 언어를 따릅니다.
 

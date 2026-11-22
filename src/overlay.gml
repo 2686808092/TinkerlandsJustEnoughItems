@@ -55,29 +55,16 @@ function JEI_Layout(_s, _gw, _gh) {
     _l.card = JEI_Rect(_px + 16 * _z, _py + 125 * _z, 618 * _z, _ph - 152 * _z);
     _l.variants = _recipeCount;
     if (_l.variants == 0) {
-        var _sources = _s.viewMode == "recipes" ? JEI_Acquisitions(_s, _s.selected) : [];
-        var _buckets = {}; var _kinds = []; var _entries = [];
-        for (var _i = 0; _i < array_length(_sources); _i++) {
-            var _source = _sources[_i]; var _kind = _source.kind;
-            if (!variable_struct_exists(_buckets, _kind)) array_push(_kinds, _kind);
-            var _bucket = variable_struct_exists(_buckets, _kind) ? variable_struct_get(_buckets, _kind) : [];
-            array_push(_bucket, _source); variable_struct_set(_buckets, _kind, _bucket);
-        }
-        for (var _i = 0; _i < array_length(_kinds); _i++) {
-            var _kind = _kinds[_i]; var _bucket = variable_struct_get(_buckets, _kind);
-            var _collapsed = variable_struct_exists(_s.sourceCollapsed, _kind);
-            array_push(_entries, {kind:_kind, count:array_length(_bucket), collapsed:_collapsed});
-            if (!_collapsed) for (var _j = 0; _j < array_length(_bucket); _j++) array_push(_entries, {source:_bucket[_j]});
-        }
+        var _entries = JEI_AcquisitionEntries(_s);
         _l.detailPages = max(1, ceil(array_length(_entries) / 5));
         _s.detailPage = clamp(_s.detailPage, 0, _l.detailPages - 1);
         for (var _i = 0; _i < 5; _i++) {
             var _index = _s.detailPage * 5 + _i;
             if (_index >= array_length(_entries)) break;
             var _entry = _entries[_index];
-            _entry.rect = JEI_Rect(_px + 25 * _z, _py + (130 + _i * 55) * _z, 600 * _z, 51 * _z);
-            if (variable_struct_exists(_entry, "source")) array_push(_l.sourceSlots, _entry);
-            else array_push(_l.sourceGroups, _entry);
+            var _rect = JEI_Rect(_px + 25 * _z, _py + (130 + _i * 55) * _z, 600 * _z, 51 * _z);
+            if (variable_struct_exists(_entry, "source")) array_push(_l.sourceSlots, {rect:_rect, source:_entry.source});
+            else array_push(_l.sourceGroups, {rect:_rect, kind:_entry.kind, count:_entry.count, collapsed:_entry.collapsed});
         }
         return _l;
     }
@@ -228,6 +215,7 @@ function JEI_Frame(_s, _input, _gw, _gh, _l = undefined) {
             if (!JEI_Hit(_group.rect, _input.x, _input.y)) continue;
             if (_group.collapsed) variable_struct_remove(_s.sourceCollapsed, _group.kind);
             else variable_struct_set(_s.sourceCollapsed, _group.kind, true);
+            _s.sourceEntries = undefined;
             return _action;
         }
         if (JEI_Hit(_l.toggle, _input.x, _input.y)) JEI_ToolbarAction(_s, _input);

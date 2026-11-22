@@ -33,7 +33,10 @@ function JEI_DrawToolbar(_s, _l) {
 
 function JEI_DrawBackdrop(_s, _w, _h) {
     var _z = min(_w / 1920, _h / 1080);
-    var _rect = JEI_Rect(0, 0, JEI_SidebarWidth(_z), _h);
+    var _side = round(JEI_SidebarWidth(_z));
+    // The sidebar has its own opacity in both states. Shade only the world to its right.
+    if (!_s.settings.autoPause) JEI_Fill([_side, 0, _w, _h], make_color_rgb(21, 17, 30), 0.26);
+    var _rect = [0, 0, _side - 1, _h];
     JEI_Fill(_rect, make_color_rgb(34, 29, 47), _s.settings.opacity);
 }
 
@@ -135,11 +138,10 @@ function JEI_DrawPopupFrame(_s, _l, _title, _item = -1) {
     var _r = _l.popup; var _z = _l.z;
     var _left = round(_r[0]); var _top = round(_r[1]);
     var _right = round(_r[2]) - 1; var _bottom = round(_r[3]) - 1;
-    var _black = make_color_rgb(18, 14, 24);
-    var _rim = make_color_rgb(39, 32, 56);
+    var _black = make_color_rgb(27, 9, 25);
     // Recess the frame rails slightly so the corner caps sit over both edges.
-    var _colors = [_black, make_color_rgb(77, 64, 103), make_color_rgb(53, 45, 73),
-        _black, _rim, make_color_rgb(73, 63, 98)];
+    var _colors = [_black, make_color_rgb(77, 67, 105), make_color_rgb(50, 33, 63),
+        make_color_rgb(32, 18, 38), make_color_rgb(50, 33, 63), make_color_rgb(63, 49, 82)];
     var _steps = [3, 6, 9, 12, 15, 22];
     for (var _i = 0; _i < array_length(_steps); _i++) {
         var _inset = round(_steps[_i] * _z);

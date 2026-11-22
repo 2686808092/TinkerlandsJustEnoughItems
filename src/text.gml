@@ -12,6 +12,11 @@ function JEI_FitWidth(_text, _scale, _width) {
 }
 
 function JEI_WrapText(_text, _scale, _width) {
+    if (_text == "") return [];
+    // Most labels fit on one line. Measure them once instead of measuring every prefix.
+    if (string_pos(chr(10), _text) == 0 && string_pos(chr(13), _text) == 0 && JEI_TextWidth(_text, _scale) <= _width) {
+        return [string_trim(_text)];
+    }
     var _lines = []; var _line = "";
     for (var _i = 1; _i <= string_length(_text); _i++) {
         var _c = string_char_at(_text, _i);

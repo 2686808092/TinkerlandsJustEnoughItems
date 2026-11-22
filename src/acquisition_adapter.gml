@@ -247,3 +247,25 @@ function JEI_Acquisitions(_s, _id) {
     var _key = string(_id);
     return variable_struct_exists(_s.acquisitions, _key) ? variable_struct_get(_s.acquisitions, _key) : [];
 }
+
+function JEI_AcquisitionEntries(_s) {
+    if (_s.viewMode != "recipes") return [];
+    var _cache = _s.sourceEntries;
+    if (is_struct(_cache) && _cache.item == _s.selected) return _cache.entries;
+    var _sources = JEI_Acquisitions(_s, _s.selected);
+    var _buckets = {}; var _kinds = []; var _entries = [];
+    for (var _i = 0; _i < array_length(_sources); _i++) {
+        var _source = _sources[_i]; var _kind = _source.kind;
+        if (!variable_struct_exists(_buckets, _kind)) array_push(_kinds, _kind);
+        var _bucket = variable_struct_exists(_buckets, _kind) ? variable_struct_get(_buckets, _kind) : [];
+        array_push(_bucket, _source); variable_struct_set(_buckets, _kind, _bucket);
+    }
+    for (var _i = 0; _i < array_length(_kinds); _i++) {
+        var _kind = _kinds[_i]; var _bucket = variable_struct_get(_buckets, _kind);
+        var _collapsed = variable_struct_exists(_s.sourceCollapsed, _kind);
+        array_push(_entries, {kind:_kind, count:array_length(_bucket), collapsed:_collapsed});
+        if (!_collapsed) for (var _j = 0; _j < array_length(_bucket); _j++) array_push(_entries, {source:_bucket[_j]});
+    }
+    _s.sourceEntries = {item:_s.selected, entries:_entries};
+    return _entries;
+}

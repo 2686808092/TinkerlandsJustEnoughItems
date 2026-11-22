@@ -6,7 +6,7 @@
 
 ## 安裝
 
-從[GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest)下載 `Just_Enough_Items_1.7.2.zip`，將 ZIP 原樣放入遊戲的 `mods` 資料夾，然後重新啟動遊戲。升級時請移除舊版 JEI ZIP。
+從[GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest)下載 `Just_Enough_Items_1.7.3.zip`，將 ZIP 原樣放入遊戲的 `mods` 資料夾，然後重新啟動遊戲。升級時請移除舊版 JEI ZIP。
 
 模組介面提供簡體中文和英文，物品與工作站名稱沿用遊戲目前的語言。
 
