@@ -5,7 +5,7 @@
 ## 1.7.3
 
 - Reuse acquisition groups and reduce repeated layout and text measurements to make open detail panels cheaper to draw.
-- Fixed the missing sidebar backing in the live game. While the world runs, a dark backing covers the full left column and the rest of the scene is lightly dimmed. During auto-pause, the game's own dimming covers both sides evenly. The native health and mana bars remain visible.
+- Fixed the sidebar draw order in the live game. While the world runs, the backing dims terrain, chests, furniture, and torches behind the item list. The native health and mana bars and JEI icons remain clear. During auto-pause, the game's own dimming covers both sides evenly.
 - Item details and settings use a deeper purple sampled from the cooking panel frame.
 
 ## 1.7.2

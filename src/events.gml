@@ -48,6 +48,7 @@ OnModUpdate(function() {
         JEI_ClosePanel(_s); JEI_ResetCapture(_s); JEI_SyncGuard(_s, false); return;
     }
     if (!_inventory && !_s.captureLeft && !_s.captureRight) { _s.frameCapture = false; JEI_SyncGuard(_s, false); return; }
+    if (_s.open && !_s.pauseOwned && !ModInstance.Exists(_s.backdrop)) JEI_CreateBackdrop(_s);
     var _input = JEI_ReadInput(_s);
     var _gw = display_get_gui_width(); var _gh = display_get_gui_height();
     var _l = JEI_Layout(_s, _gw, _gh);
@@ -83,15 +84,6 @@ OnModDrawEnd(function() {
     var _s = JEI_State();
     JEI_SyncGuard(_s, false);
     if (_s.frameCapture) JEI_BlockNative(_s);
-    if (!_s.open || !JEI_WorldReady()) return;
-    var _inventoryOpen = JEI_Runtime().inventoryOpen;
-    if (!_inventoryOpen()) return;
-    var _camera = camera_get_active();
-    if (_camera == -1) return;
-    // Paint into the world before the native HUD and JEI icons are composited.
-    JEI_DrawBackdrop(_s, display_get_gui_width(), display_get_gui_height(),
-        camera_get_view_x(_camera), camera_get_view_y(_camera),
-        camera_get_view_width(_camera), camera_get_view_height(_camera));
 });
 
 OnModDrawGUIEnd(function() {

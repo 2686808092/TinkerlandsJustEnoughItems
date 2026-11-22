@@ -31,14 +31,28 @@ function JEI_DrawToolbar(_s, _l) {
     draw_sprite_ext(_sprite, 0, _cx, _cy, _scale, _scale, 0, _s.cheat ? make_color_rgb(255, 65, 65) : c_white, 1);
 }
 
-function JEI_DrawBackdrop(_s, _w, _h, _x, _y, _viewWidth, _viewHeight) {
+function JEI_CreateBackdrop(_s) {
+    var _hud = instance_find(objGUIIngameController, 0);
+    var _backdrop = ModInstance.Create("jei_backdrop", undefined, undefined, undefined, "JEI_BackdropDraw", "");
+    // Draw after the world has been composited and immediately before the native HUD.
+    _backdrop.depth = _hud.depth + 1;
+    _s.backdrop = _backdrop;
+}
+
+function JEI_BackdropDraw() {
+    var _s = JEI_State();
+    if (!_s.open || _s.pauseOwned || !JEI_WorldReady()) return;
+    var _inventoryOpen = JEI_Runtime().inventoryOpen;
+    if (_inventoryOpen()) JEI_DrawBackdrop(_s, display_get_gui_width(), display_get_gui_height());
+}
+
+function JEI_DrawBackdrop(_s, _w, _h) {
     // The game already shades the entire world during a single-player pause.
     if (_s.pauseOwned || _w <= 0 || _h <= 0) return;
     var _z = min(_w / 1920, _h / 1080);
-    var _side = _x + round(JEI_SidebarWidth(_z)) * _viewWidth / _w;
-    var _bottom = _y + _viewHeight;
-    JEI_Fill([_side, _y, _x + _viewWidth, _bottom], make_color_rgb(21, 17, 30), 0.26);
-    var _rect = [_x, _y, _side, _bottom];
+    var _side = round(JEI_SidebarWidth(_z));
+    JEI_Fill([_side, 0, _w, _h], make_color_rgb(21, 17, 30), 0.26);
+    var _rect = [0, 0, _side, _h];
     JEI_Fill(_rect, make_color_rgb(34, 29, 47), _s.settings.opacity);
 }
 
