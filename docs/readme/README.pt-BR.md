@@ -6,7 +6,7 @@ Consulte itens, receitas, usos e formas de obtenção no inventário de Tinkerla
 
 ## Instalação
 
-Baixe `Just_Enough_Items_1.7.1.zip` em [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Coloque o ZIP sem extrair na pasta `mods` do jogo e reinicie. Ao atualizar, remova o ZIP anterior do JEI.
+Baixe `Just_Enough_Items_1.7.2.zip` em [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Coloque o ZIP sem extrair na pasta `mods` do jogo e reinicie. Ao atualizar, remova o ZIP anterior do JEI.
 
 A interface do mod está disponível em chinês simplificado e inglês. Os nomes dos itens e das estações seguem o idioma do jogo.
 

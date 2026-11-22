@@ -26,6 +26,7 @@ function JEI_SearchIndexAdd(_s, _doc) {
 function JEI_PublishSearch(_s, _query, _items) {
     if (_query != _s.search) return;
     _s.filtered = _items; _s.filterQuery = _query;
+    _s.catalogDrawRevision += 1;
     _s.filterDeveloper = _s.developer; _s.page = 0; _s.scroll = 0;
     var _key = string(_s.developer) + ":" + _query;
     if (!variable_struct_exists(_s.queryCache, _key)) array_push(_s.queryCacheKeys, _key);

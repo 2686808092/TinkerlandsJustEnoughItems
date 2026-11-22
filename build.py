@@ -6,13 +6,14 @@ import re
 import zipfile
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '1.7.1'
+VERSION = '1.7.2'
 PACKAGE_NAME = f'Just_Enough_Items_{VERSION}.zip'
 LANGUAGES = ('english', 'spanish', 'french', 'german', 'portuguese', 'japanese',
              'korean', 'chinese_traditional', 'chinese_simplified', 'russian')
 SCRIPTS = [('JEI@cs_jei_main', 5005, 'jei.gml'),
            ('JEI@cs_jei_on_mod_load', 5003, 'load.gml'),
-           ('JEI@cs_jei_on_mod_update', 5006, 'events.gml')]
+           ('JEI@cs_jei_on_mod_update', 5006, 'events.gml'),
+           ('JEI@cs_jei_draw_backdrop', 5007, 'draw_backdrop.gml')]
 
 
 def build(destination=None, suite=None):
@@ -28,7 +29,7 @@ def build(destination=None, suite=None):
                 source = '\n'.join((ROOT / 'src' / name).read_text(encoding='utf-8')
                                    for name in ('adapters.gml', 'catalog_adapter.gml', 'acquisition_adapter.gml',
                                                 'input_adapter.gml', 'runtime_adapter.gml', 'text.gml', 'pinyin_data.gml', 'pinyin.gml', 'search.gml',
-                                                'settings.gml', 'overlay.gml', 'overlay_draw.gml', 'overlay_tooltip.gml',
+                                                'settings.gml', 'overlay.gml', 'catalog_draw.gml', 'overlay_draw.gml', 'overlay_tooltip.gml',
                                                 'catalog_jobs.gml', 'catalog_cache.gml', 'search_jobs.gml')) + '\n' + source
             if suite and filename == 'events.gml':
                 source += '\n' + suite
@@ -42,7 +43,7 @@ def build(destination=None, suite=None):
             archive.writestr(language, '{}')
         archive.writestr('LICENSE-pypinyin.txt', (ROOT / 'third_party/LICENSE-pypinyin.txt').read_bytes())
     with zipfile.ZipFile(destination) as archive:
-        assert len(archive.namelist()) == 14
+        assert len(archive.namelist()) == len(SCRIPTS) + len(LANGUAGES) + 1
         for name, source in expected.items():
             assert json.loads(archive.read(name))['code'].replace('#$#', ',').replace('%$%', '"') == source
         for language in LANGUAGES:

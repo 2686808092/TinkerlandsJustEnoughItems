@@ -31,27 +31,19 @@ function JEI_DrawToolbar(_s, _l) {
     draw_sprite_ext(_sprite, 0, _cx, _cy, _scale, _scale, 0, _s.cheat ? make_color_rgb(255, 65, 65) : c_white, 1);
 }
 
+function JEI_DrawBackdrop(_s, _w, _h) {
+    var _z = min(_w / 1920, _h / 1080);
+    var _rect = JEI_Rect(0, 0, JEI_SidebarWidth(_z), _h);
+    JEI_Fill(_rect, make_color_rgb(34, 29, 47), _s.settings.opacity);
+}
+
 function JEI_DrawCatalog(_s, _l, _cream, _muted) {
     var _z = _l.z;
-    // Paint with the catalog, below the native HUD and before the icons.
-    var _backdrop = [_l.search[0], _l.previous[1] - 3 * _z, _l.toggle[2], _l.search[3]];
-    var _opacity = _s.pauseOwned ? _s.settings.opacity : max(0.87, _s.settings.opacity);
-    JEI_Fill(_backdrop, make_color_rgb(34, 29, 47), _opacity);
     var _text = string(_s.page + 1) + " / " + string(_l.pages);
     JEI_Label(_l.w / 2, _l.grid[1] - 21 * _z, _text, 2 * _z * _s.settings.font, 5, _cream);
     JEI_Arrow(_l.previous, -1, _s.page > 0, _s, _z);
     JEI_Arrow(_l.next, 1, _s.page + 1 < _l.pages, _s, _z);
-    for (var _i = 0; _i < _l.capacity; _i++) {
-        var _index = _s.page * _l.capacity + _i;
-        if (_index >= array_length(_s.filtered)) break;
-        var _id = _s.filtered[_index];
-        var _x = _l.grid[0] + (_i mod 8) * _l.slot;
-        var _y = _l.grid[1] + floor(_i / 8) * _l.slot;
-        var _r = JEI_Rect(_x + _z, _y + _z, _l.slot - 2 * _z, _l.slot - 2 * _z);
-        if (_s.hover == _id || _s.detailOpen && _s.selected == _id) JEI_Fill(_r, _cream, _s.hover == _id ? 0.24 : 0.12);
-        JEI_Icon(_id, _x + _l.slot / 2, _y + _l.slot / 2, 40 * _z);
-        if (JEI_IsBlueprint(_id)) JEI_Icon(1024, _x + _l.slot - 10 * _z, _y + _l.slot - 10 * _z, 15 * _z);
-    }
+    JEI_DrawCatalogGrid(_s, _l, _cream);
     if (array_length(_s.filtered) == 0) JEI_Label(_l.w / 2, _l.grid[1] + 60 * _z, JEI_Text(_s.catalogReady ? "empty" : "loading"), 1.8 * _z, 5, _muted);
     var _footer = [_l.search[0], _l.search[1], _l.toggle[2], _l.toggle[3]];
     JEI_Fill(_footer, JEI_SurfaceColor());
@@ -205,12 +197,11 @@ function JEI_StationItem(_recipe) {
 
 function JEI_DrawRecipe(_s, _l, _ink, _muted) {
     var _z = _l.z; var _x = _l.popup[0]; var _y = _l.popup[1];
-    var _recipes = JEI_ViewRecipes(_s);
-    var _has = array_length(_recipes) > 0;
+    var _has = _l.variants > 0;
     var _uses = _s.viewMode == "uses";
     JEI_DrawPopupFrame(_s, _l, JEI_Name(_s.selected), _s.selected);
     if (_has) {
-        var _r = _recipes[_s.variant];
+        var _r = _l.recipe;
         var _station = JEI_StationItem(_r);
         var _label = JEI_StationName(_r);
         if (_uses) _label = JEI_Text("uses") + " · " + _label;

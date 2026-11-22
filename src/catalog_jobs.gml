@@ -30,6 +30,7 @@ function JEI_ResetWorldSession(_s) {
     if (_s.catalogReady && _s.acquisitionsReady && JEI_CatalogValid(_s)) {
         var _cache = {}; JEI_CatalogCopy(_s, _cache); variable_global_set("__JEI_Catalog", _cache);
     }
+    JEI_FreeCatalogSurface(_s);
     JEI_Init(_s);
     if (variable_global_exists("__JEI_Catalog")) {
         var _cache = variable_global_get("__JEI_Catalog");

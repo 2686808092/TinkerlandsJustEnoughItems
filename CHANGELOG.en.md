@@ -2,6 +2,11 @@
 
 [简体中文](CHANGELOG.md) · [English README](docs/readme/README.en.md)
 
+## 1.7.2
+
+- The backing covers the full left column and uses the same color and opacity with auto-pause on or off. The game's health, mana, and stamina indicators draw above it.
+- Reuse the current page of item icons to reduce per-frame rendering work while the inventory is open.
+
 ## 1.7.1
 
 - Item details and settings now open centered above the inventory with a dark frame, full gold corners, and light text in the game's native font. Press Esc to close either panel.

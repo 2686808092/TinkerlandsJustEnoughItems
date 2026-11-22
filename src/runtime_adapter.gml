@@ -20,6 +20,23 @@ function JEI_Runtime() {
     return variable_global_get("__JEI_Runtime");
 }
 
+function JEI_BackdropDraw() {
+    var _s = JEI_State();
+    if (!_s.open || !JEI_WorldReady()) return;
+    var _inventoryOpen = JEI_Runtime().inventoryOpen;
+    if (!_inventoryOpen()) return;
+    JEI_DrawBackdrop(_s, display_get_gui_width(), display_get_gui_height());
+}
+
+function JEI_EnsureBackdrop() {
+    var _background = ModInstance.Find("jei_backdrop");
+    if (ModInstance.Exists(_background)) return _background;
+    _background = ModInstance.Create("jei_backdrop", undefined, undefined, undefined, "JEI@cs_jei_draw_backdrop", "");
+    // Draw GUI behind the native HUD, inside GameMaker's supported depth range.
+    _background.depth = 10000;
+    return _background;
+}
+
 function JEI_DefaultInventoryOpen() {
     if (!variable_global_exists("__INVENTORY")) return false;
     var _c = variable_global_get("__INVENTORY");

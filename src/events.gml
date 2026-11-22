@@ -41,7 +41,9 @@ OnModUpdate(function() {
     if (_modal || _codex || instance_exists(objGUITextInput) && !JEI_SearchInputExists(_s)) {
         JEI_ClosePanel(_s); JEI_ResetCapture(_s); JEI_SyncGuard(_s, false); return;
     }
-    var _input = JEI_ReadInput();
+    if (_s.open && !instance_exists(_s.backdrop)) _s.backdrop = JEI_EnsureBackdrop();
+    if (!_inventory && !_s.captureLeft && !_s.captureRight) { _s.frameCapture = false; JEI_SyncGuard(_s, false); return; }
+    var _input = JEI_ReadInput(_s);
     var _gw = display_get_gui_width(); var _gh = display_get_gui_height();
     var _l = JEI_Layout(_s, _gw, _gh);
     if (_inventory) JEI_Keyboard(_s, _input, _l);

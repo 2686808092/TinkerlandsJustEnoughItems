@@ -126,6 +126,9 @@ function JEI_Init(_s) {
     _s.cookCount = -1;
     _s.items = [];
     _s.filtered = [];
+    _s.catalogDrawRevision = 0;
+    _s.catalogSurface = undefined;
+    _s.backdrop = noone;
     _s.byItem = {};
     _s.acquisitions = {};
     _s.scroll = 0;

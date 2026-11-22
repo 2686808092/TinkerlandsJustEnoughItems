@@ -6,7 +6,7 @@ Im Inventar von Tinkerlands lassen sich Gegenstände, Rezepte, Verwendungen und 
 
 ## Installation
 
-Lade `Just_Enough_Items_1.7.1.zip` unter [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) herunter. Lege die ZIP-Datei unverändert in den Ordner `mods` des Spiels und starte es neu. Entferne beim Update die alte JEI-ZIP.
+Lade `Just_Enough_Items_1.7.2.zip` unter [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) herunter. Lege die ZIP-Datei unverändert in den Ordner `mods` des Spiels und starte es neu. Entferne beim Update die alte JEI-ZIP.
 
 Die Mod-Oberfläche ist auf vereinfachtem Chinesisch und Englisch verfügbar. Die Namen der Gegenstände und Werkstationen folgen der aktuellen Spielsprache.
 
