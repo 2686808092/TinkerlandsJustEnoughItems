@@ -31,12 +31,14 @@ function JEI_DrawToolbar(_s, _l) {
     draw_sprite_ext(_sprite, 0, _cx, _cy, _scale, _scale, 0, _s.cheat ? make_color_rgb(255, 65, 65) : c_white, 1);
 }
 
-function JEI_DrawBackdrop(_s, _w, _h) {
+function JEI_DrawBackdrop(_s, _w, _h, _x, _y, _viewWidth, _viewHeight) {
+    // The game already shades the entire world during a single-player pause.
+    if (_s.pauseOwned || _w <= 0 || _h <= 0) return;
     var _z = min(_w / 1920, _h / 1080);
-    var _side = round(JEI_SidebarWidth(_z));
-    // The sidebar has its own opacity in both states. Shade only the world to its right.
-    if (!_s.settings.autoPause) JEI_Fill([_side, 0, _w, _h], make_color_rgb(21, 17, 30), 0.26);
-    var _rect = [0, 0, _side - 1, _h];
+    var _side = _x + round(JEI_SidebarWidth(_z)) * _viewWidth / _w;
+    var _bottom = _y + _viewHeight;
+    JEI_Fill([_side, _y, _x + _viewWidth, _bottom], make_color_rgb(21, 17, 30), 0.26);
+    var _rect = [_x, _y, _side, _bottom];
     JEI_Fill(_rect, make_color_rgb(34, 29, 47), _s.settings.opacity);
 }
 

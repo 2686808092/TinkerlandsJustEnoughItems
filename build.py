@@ -12,8 +12,7 @@ LANGUAGES = ('english', 'spanish', 'french', 'german', 'portuguese', 'japanese',
              'korean', 'chinese_traditional', 'chinese_simplified', 'russian')
 SCRIPTS = [('JEI@cs_jei_main', 5005, 'jei.gml'),
            ('JEI@cs_jei_on_mod_load', 5003, 'load.gml'),
-           ('JEI@cs_jei_on_mod_update', 5006, 'events.gml'),
-           ('JEI@cs_jei_draw_backdrop', 5007, 'draw_backdrop.gml')]
+           ('JEI@cs_jei_on_mod_update', 5006, 'events.gml')]
 
 
 def build(destination=None, suite=None):
