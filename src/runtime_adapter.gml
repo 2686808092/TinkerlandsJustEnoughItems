@@ -169,23 +169,6 @@ function JEI_SearchEdit(_s, _text) {
     if (_s.searchFocused) JEI_StartSearch(_s);
 }
 
-function JEI_EnsureBackdrop() {
-    var _background = ModInstance.Find("jei_backdrop");
-    if (!ModInstance.Exists(_background)) {
-        _background = ModInstance.Create("jei_backdrop", undefined, undefined, undefined, "JEI_BackdropDraw", "");
-    }
-    // GUI draw uses depth ordering too. Native HP/mana is painted after this layer.
-    _background.depth = 100000;
-}
-
-function JEI_BackdropDraw() {
-    var _s = JEI_State();
-    if (_s.open && JEI_WorldReady()) {
-        var _l = JEI_Layout(_s, display_get_gui_width(), display_get_gui_height());
-        JEI_DrawBackdrop(_s, _l);
-    }
-}
-
 // The runner drops fullscreen on WM_IME_STARTCOMPOSITION. A screen-sized,
 // undecorated ordinary window avoids that path and keeps IME candidate windows.
 // The player's native display preference is read only, never saved by this mod.

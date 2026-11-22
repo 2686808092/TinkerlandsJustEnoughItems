@@ -2,7 +2,6 @@
 OnModLoad(function() {
     JEI_RegisterRecipeProvider("native_cube_v1", JEI_LoadCubeRecipes);
     JEI_State();
-    JEI_EnsureBackdrop();
     show_debug_message("JustEnoughItems: loaded @VERSION@");
 });
 

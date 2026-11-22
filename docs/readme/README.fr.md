@@ -6,7 +6,7 @@ Consultez les objets, leurs recettes, leurs usages et leurs sources depuis l’i
 
 ## Installation
 
-Téléchargez `Just_Enough_Items_1.7.0.zip` depuis [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Placez le ZIP tel quel dans le dossier `mods` du jeu et relancez le jeu. Retirez l’ancienne archive JEI lors d’une mise à jour.
+Téléchargez `Just_Enough_Items_1.7.1.zip` depuis [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Placez le ZIP tel quel dans le dossier `mods` du jeu et relancez le jeu. Retirez l’ancienne archive JEI lors d’une mise à jour.
 
 L’interface du mod est disponible en chinois simplifié et en anglais. Les noms des objets et des postes de fabrication suivent la langue du jeu.
 

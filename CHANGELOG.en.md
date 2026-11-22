@@ -2,6 +2,11 @@
 
 [简体中文](CHANGELOG.md) · [English README](docs/readme/README.en.md)
 
+## 1.7.1
+
+- Item details and settings now open centered above the inventory with a dark frame, full gold corners, and light text in the game's native font. Press Esc to close either panel.
+- The item list keeps a dark backing when auto-pause is off and uses slightly smaller icons for clearer spacing.
+
 ## 1.7.0
 
 - Redesigned item details and settings with native wooden frames and item slots. Transmutation recipes use the game's cube artwork. The sidebar has larger icons and keeps its backing when auto-pause is off.

@@ -149,7 +149,6 @@ function JEI_AssignBinding(_s, _name, _b) {
 
 function JEI_ConfigClick(_s, _l, _input) {
     if (!_input.leftPressed) return;
-    if (JEI_Hit(_l.close, _input.x, _input.y)) { _s.configOpen = false; _s.binding = ""; return; }
     if (_s.configTab == 0) {
         if (JEI_Hit(_l.tabs[1], _input.x, _input.y)) { _s.configTab = 1; _s.bindingNotice = ""; }
         else if (JEI_Hit(_l.options[0], _input.x, _input.y)) { _s.settings.autoPause = !_s.settings.autoPause; JEI_SaveSettings(_s); }

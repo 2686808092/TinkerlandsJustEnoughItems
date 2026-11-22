@@ -6,7 +6,7 @@ Consulta objetos, recetas, usos y formas de obtención desde el inventario de Ti
 
 ## Instalación
 
-Descarga `Just_Enough_Items_1.7.0.zip` en [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Coloca el ZIP sin descomprimir en la carpeta `mods` del juego y reinicia. Al actualizar, retira el ZIP anterior de JEI.
+Descarga `Just_Enough_Items_1.7.1.zip` en [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Coloca el ZIP sin descomprimir en la carpeta `mods` del juego y reinicia. Al actualizar, retira el ZIP anterior de JEI.
 
 La interfaz del mod está disponible en chino simplificado e inglés. Los nombres de los objetos y estaciones siguen el idioma del juego.
 

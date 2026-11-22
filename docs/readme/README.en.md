@@ -6,7 +6,7 @@ Browse items, recipes, uses, and acquisition sources inside the Tinkerlands inve
 
 ## Installation
 
-Download `Just_Enough_Items_1.7.0.zip` from [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Put the ZIP directly in the game's `mods` folder and restart. Remove the older JEI ZIP when upgrading.
+Download `Just_Enough_Items_1.7.1.zip` from [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Put the ZIP directly in the game's `mods` folder and restart. Remove the older JEI ZIP when upgrading.
 
 The mod interface is available in Simplified Chinese and English. Item and crafting station names follow the game's current language.
 
@@ -18,7 +18,7 @@ The mod interface is available in Simplified Chinese and English. Item and craft
 | View uses | Right-click a list item, or hover and press `U`. |
 | Search and browse | `Ctrl+F` focuses search. Use the mouse wheel, the arrows, or `Page Up` / `Page Down` to turn pages. |
 | Toggle the list | Press `Ctrl+O` with the inventory open. The mod remembers your choice. |
-| Close details or open settings | Press `Esc` to close details. Click the tool icon beside search for settings. |
+| Close details or open settings | Press `Esc` to close details or settings. Click the tool icon beside search for settings. |
 
 ## Recipes and sources
 

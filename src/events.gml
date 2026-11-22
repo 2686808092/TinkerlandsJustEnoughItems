@@ -19,7 +19,6 @@ function JEI_OtherModalOpen() {
 OnModUpdate(function() {
     var _s = JEI_State();
     JEI_ReleaseFrame(_s);
-    JEI_EnsureBackdrop();
     JEI_IMEWindow(_s);
     var _world = JEI_WorldReady();
     var _inventoryFn = JEI_Runtime().inventoryOpen;

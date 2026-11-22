@@ -6,7 +6,7 @@ Just Enough Items for Tinkerlands 是一款游戏内物品与配方查询模组�
 
 ## 安装
 
-在 [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) 下载 `Just_Enough_Items_1.7.0.zip`，将 ZIP 原样放入 Tinkerlands 安装目录的 `mods` 文件夹，再启动游戏。升级时移除旧版 JEI ZIP，避免同时加载两个版本。
+在 [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) 下载 `Just_Enough_Items_1.7.1.zip`，将 ZIP 原样放入 Tinkerlands 安装目录的 `mods` 文件夹，再启动游戏。升级时移除旧版 JEI ZIP，避免同时加载两个版本。
 
 模组界面提供简体中文和英文。物品和工作站名称沿用游戏当前的译名，也支持已加载的汉化模组。
 
@@ -19,7 +19,7 @@ Just Enough Items for Tinkerlands 是一款游戏内物品与配方查询模组�
 | 查看材料或工作站 | 点击配方中的材料，或点击工作站名称查看该站的配方 |
 | 搜索和翻页 | `Ctrl+F` 聚焦搜索框。用滚轮、翻页按钮或 `Page Up` / `Page Down` 翻页 |
 | 显示或隐藏列表 | 打开人物栏后按 `Ctrl+O`，再次按下恢复显示。模组会记住上次选择 |
-| 关闭详情 | `Esc` |
+| 关闭详情或设置 | `Esc` |
 | 打开设置 | 点击搜索框右侧的工具图标 |
 
 ## 配方、用途和获取途径
