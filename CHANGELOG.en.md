@@ -2,6 +2,11 @@
 
 [简体中文](CHANGELOG.md) · [English README](docs/readme/README.en.md)
 
+## 1.7.4
+
+- Fix text measurement with dynamic native fonts, preventing blank or flickering settings panels and queued Scribble font errors after leaving a world.
+- Keep the backdrop under the left item list only while the world runs. Preserve the original brightness elsewhere and retain native auto-pause shading.
+
 ## 1.7.3
 
 - Reuse acquisition groups and reduce repeated layout and text measurements to make open detail panels cheaper to draw.

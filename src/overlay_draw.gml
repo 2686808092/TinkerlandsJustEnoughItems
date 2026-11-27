@@ -51,7 +51,6 @@ function JEI_DrawBackdrop(_s, _w, _h) {
     if (_s.pauseOwned || _w <= 0 || _h <= 0) return;
     var _z = min(_w / 1920, _h / 1080);
     var _side = round(JEI_SidebarWidth(_z));
-    JEI_Fill([_side, 0, _w, _h], make_color_rgb(21, 17, 30), 0.26);
     var _rect = [0, 0, _side, _h];
     JEI_Fill(_rect, make_color_rgb(34, 29, 47), _s.settings.opacity);
 }

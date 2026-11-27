@@ -6,7 +6,7 @@
 
 ## Установка
 
-Скачайте `Just_Enough_Items_1.7.3.zip` из раздела [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Поместите ZIP без распаковки в папку `mods` и перезапустите игру. При обновлении удалите старый архив JEI.
+Скачайте `Just_Enough_Items_1.7.4.zip` из раздела [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Поместите ZIP без распаковки в папку `mods` и перезапустите игру. При обновлении удалите старый архив JEI.
 
 Интерфейс мода доступен на упрощённом китайском и английском. Названия предметов и рабочих станций соответствуют текущему языку игры.
 

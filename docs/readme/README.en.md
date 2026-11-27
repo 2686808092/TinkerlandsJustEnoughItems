@@ -6,7 +6,7 @@ Browse items, recipes, uses, and acquisition sources inside the Tinkerlands inve
 
 ## Installation
 
-Download `Just_Enough_Items_1.7.3.zip` from [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Put the ZIP directly in the game's `mods` folder and restart. Remove the older JEI ZIP when upgrading.
+Download `Just_Enough_Items_1.7.4.zip` from [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest). Put the ZIP directly in the game's `mods` folder and restart. Remove the older JEI ZIP when upgrading.
 
 The mod interface is available in Simplified Chinese and English. Item and crafting station names follow the game's current language.
 

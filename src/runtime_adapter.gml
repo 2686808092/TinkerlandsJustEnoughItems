@@ -13,11 +13,20 @@ function JEI_Runtime() {
             connected: JEI_NativeFunction("net_is_connected"),
             pause: JEI_NativeFunction("instance_pause_all"),
             hover: JEI_NativeFunction("container_get_global_hover_item"),
-            language: JEI_NativeFunction("lang"), textWidth: JEI_NativeFunction("string_width_scribble"),
+            language: JEI_NativeFunction("lang"), textWidth: JEI_DefaultTextWidth,
             textScale: JEI_NativeFunction("draw_get_text_scale"),
             panelText: JEI_NativeFunction("draw_text_gui_n"), textAlign: JEI_NativeFunction("draw_set_align")});
     }
     return variable_global_get("__JEI_Runtime");
+}
+
+function JEI_DefaultTextWidth(_text) {
+    // Dynamic native font names are not Scribble registration keys.
+    var _scribble = JEI_NativeFunction("scribble");
+    var _element = _scribble(_text);
+    var _fonts = variable_global_get("__FONTS");
+    _element.starting_format(_fonts.normalString, c_white);
+    return _element.get_width();
 }
 
 function JEI_DefaultInventoryOpen() {

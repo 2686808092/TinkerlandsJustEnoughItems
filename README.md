@@ -6,7 +6,7 @@ Just Enough Items for Tinkerlands 是一款游戏内物品与配方查询模组�
 
 ## 安装
 
-在 [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) 下载 `Just_Enough_Items_1.7.3.zip`，将 ZIP 原样放入 Tinkerlands 安装目录的 `mods` 文件夹，再启动游戏。升级时移除旧版 JEI ZIP，避免同时加载两个版本。
+在 [GitHub Releases](https://github.com/2686808092/TinkerlandsJustEnoughItems/releases/latest) 下载 `Just_Enough_Items_1.7.4.zip`，将 ZIP 原样放入 Tinkerlands 安装目录的 `mods` 文件夹，再启动游戏。升级时移除旧版 JEI ZIP，避免同时加载两个版本。
 
 模组界面提供简体中文和英文。物品和工作站名称沿用游戏当前的译名，也支持已加载的汉化模组。
 
